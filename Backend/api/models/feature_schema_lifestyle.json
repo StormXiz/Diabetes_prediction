@@ -1,0 +1,204 @@
+{
+  "module": "lifestyle",
+  "target": "Diabetes_binary",
+  "feature_order": [
+    "BMI",
+    "MentHlth",
+    "PhysHlth",
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "Smoker",
+    "Stroke",
+    "HeartDiseaseorAttack",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "DiffWalk",
+    "Sex",
+    "GenHlth",
+    "Age",
+    "Education",
+    "Income"
+  ],
+  "numeric_features": [
+    "BMI",
+    "MentHlth",
+    "PhysHlth"
+  ],
+  "binary_features": [
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "Smoker",
+    "Stroke",
+    "HeartDiseaseorAttack",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "DiffWalk",
+    "Sex"
+  ],
+  "ordinal_features": [
+    "GenHlth",
+    "Age",
+    "Education",
+    "Income"
+  ],
+  "ranges": {
+    "BMI": {
+      "min": 12,
+      "max": 70,
+      "type": "float",
+      "help": "\u00cdndice de masa corporal"
+    },
+    "MentHlth": {
+      "min": 0,
+      "max": 30,
+      "type": "int",
+      "help": "D\u00edas de mala salud mental (\u00faltimos 30)"
+    },
+    "PhysHlth": {
+      "min": 0,
+      "max": 30,
+      "type": "int",
+      "help": "D\u00edas de mala salud f\u00edsica (\u00faltimos 30)"
+    },
+    "GenHlth": {
+      "min": 1,
+      "max": 5,
+      "type": "int",
+      "help": "Salud general autopercibida (1=excelente..5=mala)"
+    },
+    "Age": {
+      "min": 1,
+      "max": 13,
+      "type": "int",
+      "help": "Bucket de edad BRFSS (1=18-24 ... 13=80+)"
+    },
+    "Education": {
+      "min": 1,
+      "max": 6,
+      "type": "int"
+    },
+    "Income": {
+      "min": 1,
+      "max": 8,
+      "type": "int"
+    },
+    "HighBP": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    },
+    "HighChol": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    },
+    "CholCheck": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    },
+    "Smoker": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    },
+    "Stroke": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    },
+    "HeartDiseaseorAttack": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    },
+    "PhysActivity": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    },
+    "Fruits": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    },
+    "Veggies": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    },
+    "HvyAlcoholConsump": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    },
+    "AnyHealthcare": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    },
+    "NoDocbcCost": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    },
+    "DiffWalk": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    },
+    "Sex": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    }
+  },
+  "deployed_threshold": 0.34586870670318604,
+  "threshold_f1_optimal": 0.597207248210907,
+  "recall_target": 0.9,
+  "recall_target_reached_on_validation": true,
+  "top_factors_global": [
+    {
+      "feature": "GenHlth",
+      "mean_abs_shap": 0.5283664464950562
+    },
+    {
+      "feature": "BMI",
+      "mean_abs_shap": 0.4015410244464874
+    },
+    {
+      "feature": "Age",
+      "mean_abs_shap": 0.39723673462867737
+    },
+    {
+      "feature": "HighBP",
+      "mean_abs_shap": 0.3646557927131653
+    },
+    {
+      "feature": "HighChol",
+      "mean_abs_shap": 0.29626962542533875
+    },
+    {
+      "feature": "Income",
+      "mean_abs_shap": 0.12540966272354126
+    },
+    {
+      "feature": "Sex",
+      "mean_abs_shap": 0.11288207024335861
+    },
+    {
+      "feature": "CholCheck",
+      "mean_abs_shap": 0.07405778765678406
+    }
+  ]
+}

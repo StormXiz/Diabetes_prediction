@@ -1,0 +1,115 @@
+<!--
+  Plantilla "Confirm signup" para Supabase Auth.
+  Variables de Supabase usadas: {{ .Token }} (código OTP de 6 dígitos) y
+  {{ .ConfirmationURL }} (enlace alternativo, por si el usuario prefiere clic
+  en vez de escribir el código).
+
+  Diseño: tablas + estilos inline (requisito de compatibilidad con clientes de
+  correo: Gmail, Outlook, Apple Mail no soportan flexbox/grid ni <style> externo
+  de forma fiable). Versión clara: fondo blanco, acentos verde/azul.
+-->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Confirma tu cuenta</title>
+</head>
+<body style="margin:0; padding:0; background-color:#f1f5f4; font-family:'Segoe UI', Helvetica, Arial, sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#f1f5f4; padding:40px 16px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="480" cellpadding="0" cellspacing="0" style="max-width:480px; width:100%; background-color:#ffffff; border-radius:16px; overflow:hidden; border:1px solid #e2e8e6; box-shadow:0 8px 30px rgba(15,23,42,0.06);">
+
+          <!-- Barra superior degradada verde -> azul -->
+          <tr>
+            <td style="height:6px; background:linear-gradient(90deg,#059669,#0891b2 55%,#2563eb); font-size:0; line-height:0;">&nbsp;</td>
+          </tr>
+
+          <!-- Wordmark -->
+          <tr>
+            <td style="padding:32px 40px 0 40px;" align="center">
+              <table role="presentation" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="width:34px; height:34px; border-radius:9px; background:linear-gradient(135deg,#059669,#2563eb); text-align:center; vertical-align:middle;">
+                    <span style="font-size:18px; line-height:34px; color:#ffffff;">✚</span>
+                  </td>
+                  <td style="padding-left:10px; font-size:17px; font-weight:700; color:#0f172a; letter-spacing:-0.2px;">
+                    Diabetes<span style="color:#059669;">Risk</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Título -->
+          <tr>
+            <td style="padding:28px 40px 0 40px;" align="center">
+              <p style="margin:0; font-size:22px; font-weight:700; color:#0f172a;">Confirma tu cuenta</p>
+              <p style="margin:10px 0 0 0; font-size:14.5px; line-height:1.6; color:#5b6b6a;">
+                Usa este código para terminar tu registro en la plataforma de orientación sobre diabetes tipo 2.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Código OTP -->
+          <tr>
+            <td style="padding:28px 40px 4px 40px;" align="center">
+              <table role="presentation" cellpadding="0" cellspacing="0" style="background:linear-gradient(135deg,#ecfdf5,#eff6ff); border:1px solid #bfe3d4; border-radius:12px; padding:0;">
+                <tr>
+                  <td style="padding:20px 32px;">
+                    <p style="margin:0; font-family:'SF Mono', 'Courier New', monospace; font-size:34px; font-weight:700; letter-spacing:10px; color:#047857; text-align:center;">
+                      {{ .Token }}
+                    </p>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:14px 0 0 0; font-size:12.5px; color:#7c8b89;">
+                Este código expira pronto (por defecto, 1 hora) y solo puede usarse una vez.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Alternativa por enlace -->
+          <tr>
+            <td style="padding:22px 40px 0 40px;" align="center">
+              <p style="margin:0; font-size:13px; color:#7c8b89;">
+                ¿Prefieres confirmar con un clic?
+                <a href="{{ .ConfirmationURL }}" style="color:#2563eb; text-decoration:none; font-weight:600;">Confirmar por enlace</a>
+              </p>
+            </td>
+          </tr>
+
+          <!-- Separador -->
+          <tr>
+            <td style="padding:28px 40px 0 40px;">
+              <div style="border-top:1px solid #e6ebea; font-size:0; line-height:0;">&nbsp;</div>
+            </td>
+          </tr>
+
+          <!-- Aviso -->
+          <tr>
+            <td style="padding:20px 40px 8px 40px;" align="center">
+              <p style="margin:0; font-size:12px; line-height:1.7; color:#8b9998;">
+                Si no creaste esta cuenta, ignora este correo — no se realizará ningún cambio.<br/>
+                Esta plataforma ofrece una <strong style="color:#475569;">estimación orientativa de riesgo</strong>,
+                no un diagnóstico médico. Ante cualquier duda, consulta a un profesional de salud.
+              </p>
+            </td>
+          </tr>
+
+          <!-- Footer -->
+          <tr>
+            <td style="padding:22px 40px 30px 40px; background-color:#f8faf9;" align="center">
+              <p style="margin:0; font-size:11.5px; color:#a3b0ae;">
+                Correo automático — por favor no respondas a este mensaje.
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

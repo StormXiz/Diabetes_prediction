@@ -1,0 +1,134 @@
+{
+  "module": "clinical",
+  "target": "diabetes",
+  "feature_order_raw": [
+    "age",
+    "bmi",
+    "HbA1c_level",
+    "blood_glucose_level",
+    "hypertension",
+    "heart_disease",
+    "gender",
+    "smoking_history"
+  ],
+  "feature_order_encoded": [
+    "age",
+    "bmi",
+    "HbA1c_level",
+    "blood_glucose_level",
+    "hypertension",
+    "heart_disease",
+    "gender_Female",
+    "gender_Male",
+    "gender_Other",
+    "smoking_history_current",
+    "smoking_history_ever",
+    "smoking_history_former",
+    "smoking_history_never",
+    "smoking_history_not current",
+    "smoking_history_unknown"
+  ],
+  "numeric_features": [
+    "age",
+    "bmi",
+    "HbA1c_level",
+    "blood_glucose_level"
+  ],
+  "binary_features": [
+    "hypertension",
+    "heart_disease"
+  ],
+  "categorical_features": [
+    "gender",
+    "smoking_history"
+  ],
+  "categorical_choices": {
+    "gender": [
+      "Female",
+      "Male",
+      "Other"
+    ],
+    "smoking_history": [
+      "current",
+      "ever",
+      "former",
+      "never",
+      "not current",
+      "unknown"
+    ]
+  },
+  "ranges": {
+    "age": {
+      "min": 0,
+      "max": 110,
+      "type": "float",
+      "help": "Edad en a\u00f1os"
+    },
+    "bmi": {
+      "min": 10,
+      "max": 80,
+      "type": "float",
+      "help": "\u00cdndice de masa corporal"
+    },
+    "HbA1c_level": {
+      "min": 3.0,
+      "max": 20.0,
+      "type": "float",
+      "help": "Hemoglobina glicosilada (%)"
+    },
+    "blood_glucose_level": {
+      "min": 40,
+      "max": 400,
+      "type": "int",
+      "help": "Glucosa en sangre (mg/dL)"
+    },
+    "hypertension": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    },
+    "heart_disease": {
+      "min": 0,
+      "max": 1,
+      "type": "int"
+    }
+  },
+  "deployed_threshold": 0.5237749218940735,
+  "threshold_f1_optimal": 0.8408411741256714,
+  "recall_target": 0.9,
+  "recall_target_reached_on_validation": true,
+  "top_factors_global": [
+    {
+      "feature": "HbA1c_level",
+      "mean_abs_shap": 2.555302143096924
+    },
+    {
+      "feature": "blood_glucose_level",
+      "mean_abs_shap": 2.0653176307678223
+    },
+    {
+      "feature": "age",
+      "mean_abs_shap": 0.7698575854301453
+    },
+    {
+      "feature": "bmi",
+      "mean_abs_shap": 0.3736737072467804
+    },
+    {
+      "feature": "smoking_history_unknown",
+      "mean_abs_shap": 0.13180112838745117
+    },
+    {
+      "feature": "hypertension",
+      "mean_abs_shap": 0.10116145014762878
+    },
+    {
+      "feature": "gender_Male",
+      "mean_abs_shap": 0.07181558012962341
+    },
+    {
+      "feature": "heart_disease",
+      "mean_abs_shap": 0.06570734083652496
+    }
+  ]
+}

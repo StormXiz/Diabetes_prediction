@@ -1,0 +1,63 @@
+# ============================================================
+# requirements.txt — Proyecto Diabetes (Minería de Datos + IA + API)
+# Uso en entorno virtual:
+#   python -m venv venv
+#   source venv/bin/activate        (Windows: venv\Scripts\activate)
+#   pip install -r requirements.txt
+# ============================================================
+
+# --- Núcleo de datos / ML ---
+numpy>=1.26
+pandas>=2.2
+scikit-learn>=1.5
+scipy>=1.13
+
+# --- Modelos de boosting ---
+# NOTA: fijado a 2.1.4 (no >=2.1 libre) porque xgboost>=3.x serializa el modelo
+# en un formato que shap 0.49 aún no parsea bien (bug conocido: ValueError al
+# leer "base_score"). Con 2.1.4 + shap>=0.46 no hay problema.
+xgboost==2.1.4
+lightgbm>=4.3
+
+# --- Manejo de desbalance de clases ---
+imbalanced-learn>=0.12
+
+# --- Explicabilidad del modelo (top factors / SHAP) ---
+shap>=0.46
+
+# --- Optimización de hiperparámetros ---
+optuna>=3.6
+
+# --- EDA / visualización (notebooks y figuras del informe) ---
+matplotlib>=3.9
+seaborn>=0.13
+jupyter>=1.0
+
+# --- Serialización de modelos y preprocesadores ---
+joblib>=1.4
+
+# --- API que sirve el modelo (FastAPI) ---
+fastapi>=0.115
+uvicorn[standard]>=0.30
+pydantic>=2.8
+python-dotenv>=1.0
+
+# --- Verificación de JWT de Supabase en la API ---
+pyjwt>=2.9
+python-jose[cryptography]>=3.3
+
+# --- Cliente Supabase (opcional, si la API escribe en Supabase) ---
+supabase>=2.7
+
+# --- Descarga de datasets desde Kaggle (opcional) ---
+kaggle>=1.6
+
+# ============================================================
+# NOTA: el FRONTEND (Next.js + React) usa Node/npm, NO este archivo.
+# Sus dependencias (next, react, @supabase/supabase-js, framer-motion/motion)
+# se instalan con npm/pnpm en package.json, no aquí.
+# Skills de diseño (instalar aparte, ver PLAN_MAESTRO.md sec. 16):
+#   npx skills add emilkowalski/skill
+#   npx impeccable install   (+  /impeccable init)
+#   npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"
+# ============================================================

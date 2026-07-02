@@ -1,0 +1,1248 @@
+{
+  "lifestyle": {
+    "dataset": "lifestyle",
+    "final_model": "xgboost",
+    "best_params": {
+      "colsample_bytree": 0.7301321323053057,
+      "learning_rate": 0.1171693224223705,
+      "max_depth": 4,
+      "min_child_weight": 7,
+      "n_estimators": 202,
+      "subsample": 0.8347004662655393
+    },
+    "cv_roc_auc_train": 0.8085029486691352,
+    "thresholds": {
+      "f1_optimal": 0.597207248210907,
+      "recall_target": 0.34586870670318604
+    },
+    "recall_target_reached_on_validation": true,
+    "test_metrics_at_f1_threshold": {
+      "accuracy": 0.7705988162933736,
+      "precision": 0.39906735751295336,
+      "recall": 0.6462493706997818,
+      "f1": 0.49343327567429046,
+      "roc_auc": 0.812349990182484,
+      "pr_auc": 0.47680871514108836,
+      "confusion_matrix": [
+        [
+          22710,
+          5799
+        ],
+        [
+          2108,
+          3851
+        ]
+      ]
+    },
+    "test_metrics_at_recall_threshold_DEPLOYED": {
+      "accuracy": 0.6022977834513171,
+      "precision": 0.2889820815859703,
+      "recall": 0.8904178553448565,
+      "f1": 0.4363486842105263,
+      "roc_auc": 0.812349990182484,
+      "pr_auc": 0.47680871514108836,
+      "confusion_matrix": [
+        [
+          15454,
+          13055
+        ],
+        [
+          653,
+          5306
+        ]
+      ]
+    },
+    "top_factors_global": [
+      {
+        "feature": "GenHlth",
+        "mean_abs_shap": 0.5283664464950562
+      },
+      {
+        "feature": "BMI",
+        "mean_abs_shap": 0.4015410244464874
+      },
+      {
+        "feature": "Age",
+        "mean_abs_shap": 0.39723673462867737
+      },
+      {
+        "feature": "HighBP",
+        "mean_abs_shap": 0.3646557927131653
+      },
+      {
+        "feature": "HighChol",
+        "mean_abs_shap": 0.29626962542533875
+      },
+      {
+        "feature": "Income",
+        "mean_abs_shap": 0.12540966272354126
+      },
+      {
+        "feature": "Sex",
+        "mean_abs_shap": 0.11288207024335861
+      },
+      {
+        "feature": "CholCheck",
+        "mean_abs_shap": 0.07405778765678406
+      }
+    ],
+    "all_models_comparison": {
+      "logreg": {
+        "model_name": "logreg",
+        "dataset": "lifestyle",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.6042746781042351,
+        "fit_seconds": 0.1426548957824707,
+        "n_train_used": 160846,
+        "params": {
+          "C": "1.0",
+          "class_weight": "balanced",
+          "dual": "False",
+          "fit_intercept": "True",
+          "intercept_scaling": "1",
+          "l1_ratio": "None",
+          "max_iter": "1000",
+          "multi_class": "deprecated",
+          "n_jobs": "None",
+          "penalty": "l2",
+          "random_state": "42",
+          "solver": "lbfgs",
+          "tol": "0.0001",
+          "verbose": "0",
+          "warm_start": "False"
+        },
+        "extra_info": {},
+        "val_metrics": {
+          "accuracy": 0.7770040908695274,
+          "precision": 0.40606983574458827,
+          "recall": 0.626447390501762,
+          "f1": 0.492740232312566,
+          "roc_auc": 0.8072084110464113,
+          "pr_auc": 0.44511134621201487,
+          "confusion_matrix": [
+            [
+              23048,
+              5460
+            ],
+            [
+              2226,
+              3733
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.7788673552280376,
+          "precision": 0.4066045153319106,
+          "recall": 0.6074844772612854,
+          "f1": 0.48714843224330506,
+          "roc_auc": 0.8061215757605061,
+          "pr_auc": 0.4575170672653198,
+          "confusion_matrix": [
+            [
+              23226,
+              5283
+            ],
+            [
+              2339,
+              3620
+            ]
+          ]
+        }
+      },
+      "dtree": {
+        "model_name": "dtree",
+        "dataset": "lifestyle",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.5799492012693431,
+        "fit_seconds": 0.20708990097045898,
+        "n_train_used": 160846,
+        "params": {
+          "ccp_alpha": "0.0",
+          "class_weight": "balanced",
+          "criterion": "gini",
+          "max_depth": "10",
+          "max_features": "None",
+          "max_leaf_nodes": "None",
+          "min_impurity_decrease": "0.0",
+          "min_samples_leaf": "20",
+          "min_samples_split": "2",
+          "min_weight_fraction_leaf": "0.0",
+          "monotonic_cst": "None",
+          "random_state": "42",
+          "splitter": "best"
+        },
+        "extra_info": {},
+        "val_metrics": {
+          "accuracy": 0.7540255896944904,
+          "precision": 0.38062742867974597,
+          "recall": 0.6739385802987078,
+          "f1": 0.4864930345245306,
+          "roc_auc": 0.7949237738220198,
+          "pr_auc": 0.43748305683325783,
+          "confusion_matrix": [
+            [
+              21973,
+              6535
+            ],
+            [
+              1943,
+              4016
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.7547580364395962,
+          "precision": 0.3790494665373424,
+          "recall": 0.6558147340157745,
+          "f1": 0.4804228901591985,
+          "roc_auc": 0.7923947299425516,
+          "pr_auc": 0.43963611632032407,
+          "confusion_matrix": [
+            [
+              22107,
+              6402
+            ],
+            [
+              2051,
+              3908
+            ]
+          ]
+        }
+      },
+      "xgboost": {
+        "model_name": "xgboost",
+        "dataset": "lifestyle",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.6066266298294067,
+        "fit_seconds": 0.4895961284637451,
+        "n_train_used": 160846,
+        "params": {
+          "objective": "binary:logistic",
+          "base_score": "None",
+          "booster": "None",
+          "callbacks": "None",
+          "colsample_bylevel": "None",
+          "colsample_bynode": "None",
+          "colsample_bytree": "None",
+          "device": "None",
+          "early_stopping_rounds": "None",
+          "enable_categorical": "False",
+          "eval_metric": "logloss",
+          "feature_types": "None",
+          "gamma": "None",
+          "grow_policy": "None",
+          "importance_type": "None",
+          "interaction_constraints": "None",
+          "learning_rate": "0.1",
+          "max_bin": "None",
+          "max_cat_threshold": "None",
+          "max_cat_to_onehot": "None",
+          "max_delta_step": "None",
+          "max_depth": "6",
+          "max_leaves": "None",
+          "min_child_weight": "None",
+          "missing": "nan",
+          "monotone_constraints": "None",
+          "multi_strategy": "None",
+          "n_estimators": "300",
+          "n_jobs": "-1",
+          "num_parallel_tree": "None",
+          "random_state": "42",
+          "reg_alpha": "None",
+          "reg_lambda": "None",
+          "sampling_method": "None",
+          "scale_pos_weight": "4.784162830840046",
+          "subsample": "None",
+          "tree_method": "hist",
+          "validate_parameters": "None",
+          "verbosity": "None"
+        },
+        "extra_info": {
+          "scale_pos_weight": 4.784162830840046
+        },
+        "val_metrics": {
+          "accuracy": 0.7790930455218035,
+          "precision": 0.4115824340207287,
+          "recall": 0.6464171840912905,
+          "f1": 0.5029377203290247,
+          "roc_auc": 0.8112148498110174,
+          "pr_auc": 0.4603997187663205,
+          "confusion_matrix": [
+            [
+              23001,
+              5507
+            ],
+            [
+              2107,
+              3852
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.7770105605199025,
+          "precision": 0.4049532195927353,
+          "recall": 0.6173854673602953,
+          "f1": 0.4890986439776655,
+          "roc_auc": 0.8073344658986077,
+          "pr_auc": 0.46644679223854446,
+          "confusion_matrix": [
+            [
+              23103,
+              5406
+            ],
+            [
+              2280,
+              3679
+            ]
+          ]
+        }
+      },
+      "lightgbm": {
+        "model_name": "lightgbm",
+        "dataset": "lifestyle",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.5997232793109056,
+        "fit_seconds": 0.6355342864990234,
+        "n_train_used": 160846,
+        "params": {
+          "boosting_type": "gbdt",
+          "class_weight": "balanced",
+          "colsample_bytree": "1.0",
+          "importance_type": "split",
+          "learning_rate": "0.1",
+          "max_depth": "-1",
+          "min_child_samples": "20",
+          "min_child_weight": "0.001",
+          "min_split_gain": "0.0",
+          "n_estimators": "300",
+          "n_jobs": "-1",
+          "num_leaves": "63",
+          "objective": "None",
+          "random_state": "42",
+          "reg_alpha": "0.0",
+          "reg_lambda": "0.0",
+          "subsample": "1.0",
+          "subsample_for_bin": "200000",
+          "subsample_freq": "0",
+          "verbosity": "-1"
+        },
+        "extra_info": {},
+        "val_metrics": {
+          "accuracy": 0.778976992485566,
+          "precision": 0.41077767021619876,
+          "recall": 0.6408793421715053,
+          "f1": 0.5006554798112218,
+          "roc_auc": 0.8107848235803738,
+          "pr_auc": 0.4590191471757721,
+          "confusion_matrix": [
+            [
+              23030,
+              5478
+            ],
+            [
+              2140,
+              3819
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.7758210514100035,
+          "precision": 0.40285714285714286,
+          "recall": 0.615203893270683,
+          "f1": 0.4868849193173517,
+          "roc_auc": 0.8073847057280134,
+          "pr_auc": 0.4663474128968407,
+          "confusion_matrix": [
+            [
+              23075,
+              5434
+            ],
+            [
+              2293,
+              3666
+            ]
+          ]
+        }
+      },
+      "rf": {
+        "model_name": "rf",
+        "dataset": "lifestyle",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.5540919398015741,
+        "fit_seconds": 4.138062000274658,
+        "n_train_used": 160846,
+        "params": {
+          "bootstrap": "True",
+          "ccp_alpha": "0.0",
+          "class_weight": "balanced_subsample",
+          "criterion": "gini",
+          "max_depth": "14",
+          "max_features": "sqrt",
+          "max_leaf_nodes": "None",
+          "max_samples": "None",
+          "min_impurity_decrease": "0.0",
+          "min_samples_leaf": "1",
+          "min_samples_split": "2",
+          "min_weight_fraction_leaf": "0.0",
+          "monotonic_cst": "None",
+          "n_estimators": "200",
+          "n_jobs": "-1",
+          "oob_score": "False",
+          "random_state": "42",
+          "verbose": "0",
+          "warm_start": "False"
+        },
+        "extra_info": {},
+        "val_metrics": {
+          "accuracy": 0.7818783183915049,
+          "precision": 0.4114103875440391,
+          "recall": 0.6074844772612854,
+          "f1": 0.49058137959073045,
+          "roc_auc": 0.8071366659357156,
+          "pr_auc": 0.4508425705489144,
+          "confusion_matrix": [
+            [
+              23329,
+              5179
+            ],
+            [
+              2339,
+              3620
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.781072298943948,
+          "precision": 0.40746355685131197,
+          "recall": 0.5863399899311965,
+          "f1": 0.48080363286087796,
+          "roc_auc": 0.8046087888645181,
+          "pr_auc": 0.4586591514690776,
+          "confusion_matrix": [
+            [
+              23428,
+              5081
+            ],
+            [
+              2465,
+              3494
+            ]
+          ]
+        }
+      },
+      "gboost": {
+        "model_name": "gboost",
+        "dataset": "lifestyle",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.6209238292521674,
+        "fit_seconds": 10.506342887878418,
+        "n_train_used": 160846,
+        "params": {
+          "ccp_alpha": "0.0",
+          "criterion": "friedman_mse",
+          "init": "None",
+          "learning_rate": "0.1",
+          "loss": "log_loss",
+          "max_depth": "3",
+          "max_features": "None",
+          "max_leaf_nodes": "None",
+          "min_impurity_decrease": "0.0",
+          "min_samples_leaf": "1",
+          "min_samples_split": "2",
+          "min_weight_fraction_leaf": "0.0",
+          "n_estimators": "150",
+          "n_iter_no_change": "None",
+          "random_state": "42",
+          "subsample": "1.0",
+          "tol": "0.0001",
+          "validation_fraction": "0.1",
+          "verbose": "0",
+          "warm_start": "False"
+        },
+        "extra_info": {
+          "sample_weight": "balanced (manual)"
+        },
+        "val_metrics": {
+          "accuracy": 0.7830098354948212,
+          "precision": 0.4165568730786122,
+          "recall": 0.6366840073837893,
+          "f1": 0.5036171766111369,
+          "roc_auc": 0.8147790448378216,
+          "pr_auc": 0.4644427977637931,
+          "confusion_matrix": [
+            [
+              23194,
+              5314
+            ],
+            [
+              2165,
+              3794
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.7819716838807009,
+          "precision": 0.41236765037170536,
+          "recall": 0.6143648263131398,
+          "f1": 0.49349598975534137,
+          "roc_auc": 0.8122732294917558,
+          "pr_auc": 0.4757998627376284,
+          "confusion_matrix": [
+            [
+              23292,
+              5217
+            ],
+            [
+              2298,
+              3661
+            ]
+          ]
+        }
+      },
+      "knn": {
+        "model_name": "knn",
+        "dataset": "lifestyle",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.25145061022412823,
+        "fit_seconds": 0.0007119178771972656,
+        "n_train_used": 30000,
+        "params": {
+          "algorithm": "auto",
+          "leaf_size": "30",
+          "metric": "minkowski",
+          "metric_params": "None",
+          "n_jobs": "-1",
+          "n_neighbors": "15",
+          "p": "2",
+          "weights": "distance"
+        },
+        "extra_info": {
+          "subsampled_to": 30000
+        },
+        "val_metrics": {
+          "accuracy": 0.7468303014477616,
+          "precision": 0.36012536649479326,
+          "recall": 0.5977513005537842,
+          "f1": 0.44946372239747634,
+          "roc_auc": 0.7589900014346669,
+          "pr_auc": 0.3768865057730923,
+          "confusion_matrix": [
+            [
+              22179,
+              6329
+            ],
+            [
+              2397,
+              3562
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.746866658930022,
+          "precision": 0.3589638996532735,
+          "recall": 0.5907031381104212,
+          "f1": 0.44655883285759596,
+          "roc_auc": 0.7551439772560202,
+          "pr_auc": 0.370532210061229,
+          "confusion_matrix": [
+            [
+              22223,
+              6286
+            ],
+            [
+              2439,
+              3520
+            ]
+          ]
+        }
+      },
+      "svm": {
+        "model_name": "svm",
+        "dataset": "lifestyle",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.20366069273275292,
+        "fit_seconds": 2.2395050525665283,
+        "n_train_used": 6000,
+        "params": {
+          "C": "1.0",
+          "break_ties": "False",
+          "cache_size": "200",
+          "class_weight": "balanced",
+          "coef0": "0.0",
+          "decision_function_shape": "ovr",
+          "degree": "3",
+          "gamma": "scale",
+          "kernel": "rbf",
+          "max_iter": "-1",
+          "probability": "True",
+          "random_state": "42",
+          "shrinking": "True",
+          "tol": "0.001",
+          "verbose": "False"
+        },
+        "extra_info": {
+          "subsampled_to": 6000
+        },
+        "val_metrics": {
+          "accuracy": 0.7405924507499927,
+          "precision": 0.3655787955283087,
+          "recall": 0.6804833025675449,
+          "f1": 0.47563192774617324,
+          "roc_auc": 0.7898720391691101,
+          "pr_auc": 0.4100846886196727,
+          "confusion_matrix": [
+            [
+              21471,
+              7037
+            ],
+            [
+              1904,
+              4055
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.7418475107345944,
+          "precision": 0.3639729704711654,
+          "recall": 0.6598422554119818,
+          "f1": 0.46915642524758383,
+          "roc_auc": 0.7849885697177346,
+          "pr_auc": 0.40501783433680477,
+          "confusion_matrix": [
+            [
+              21638,
+              6871
+            ],
+            [
+              2027,
+              3932
+            ]
+          ]
+        }
+      }
+    }
+  },
+  "clinical": {
+    "dataset": "clinical",
+    "final_model": "xgboost",
+    "best_params": {
+      "colsample_bytree": 0.662397808134481,
+      "learning_rate": 0.03452090304204987,
+      "max_depth": 7,
+      "min_child_weight": 4,
+      "n_estimators": 301,
+      "subsample": 0.8603553891795411
+    },
+    "cv_roc_auc_train": 0.9793640196725439,
+    "thresholds": {
+      "f1_optimal": 0.8408411741256714,
+      "recall_target": 0.5237749218940735
+    },
+    "recall_target_reached_on_validation": true,
+    "test_metrics_at_f1_threshold": {
+      "accuracy": 0.9695603938427403,
+      "precision": 0.903976721629486,
+      "recall": 0.7327044025157232,
+      "f1": 0.809379070777247,
+      "roc_auc": 0.9798928366453834,
+      "pr_auc": 0.8915788229202629,
+      "confusion_matrix": [
+        [
+          13051,
+          99
+        ],
+        [
+          340,
+          932
+        ]
+      ]
+    },
+    "test_metrics_at_recall_threshold_DEPLOYED": {
+      "accuracy": 0.9129801691859659,
+      "precision": 0.5036940460669275,
+      "recall": 0.9111635220125787,
+      "f1": 0.6487545479988804,
+      "roc_auc": 0.9798928366453834,
+      "pr_auc": 0.8915788229202629,
+      "confusion_matrix": [
+        [
+          12008,
+          1142
+        ],
+        [
+          113,
+          1159
+        ]
+      ]
+    },
+    "top_factors_global": [
+      {
+        "feature": "HbA1c_level",
+        "mean_abs_shap": 2.555302143096924
+      },
+      {
+        "feature": "blood_glucose_level",
+        "mean_abs_shap": 2.0653176307678223
+      },
+      {
+        "feature": "age",
+        "mean_abs_shap": 0.7698575854301453
+      },
+      {
+        "feature": "bmi",
+        "mean_abs_shap": 0.3736737072467804
+      },
+      {
+        "feature": "smoking_history_unknown",
+        "mean_abs_shap": 0.13180112838745117
+      },
+      {
+        "feature": "hypertension",
+        "mean_abs_shap": 0.10116145014762878
+      },
+      {
+        "feature": "gender_Male",
+        "mean_abs_shap": 0.07181558012962341
+      },
+      {
+        "feature": "heart_disease",
+        "mean_abs_shap": 0.06570734083652496
+      }
+    ],
+    "all_models_comparison": {
+      "logreg": {
+        "model_name": "logreg",
+        "dataset": "clinical",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.8974394005316034,
+        "fit_seconds": 0.0950775146484375,
+        "n_train_used": 67302,
+        "params": {
+          "C": "1.0",
+          "class_weight": "balanced",
+          "dual": "False",
+          "fit_intercept": "True",
+          "intercept_scaling": "1",
+          "l1_ratio": "None",
+          "max_iter": "1000",
+          "multi_class": "deprecated",
+          "n_jobs": "None",
+          "penalty": "l2",
+          "random_state": "42",
+          "solver": "lbfgs",
+          "tol": "0.0001",
+          "verbose": "0",
+          "warm_start": "False"
+        },
+        "extra_info": {},
+        "val_metrics": {
+          "accuracy": 0.954999306614894,
+          "precision": 0.8263598326359832,
+          "recall": 0.6205813040062844,
+          "f1": 0.708838043965904,
+          "roc_auc": 0.9558767697112501,
+          "pr_auc": 0.7982368310474381,
+          "confusion_matrix": [
+            [
+              12983,
+              166
+            ],
+            [
+              483,
+              790
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.9595063098044654,
+          "precision": 0.8346303501945526,
+          "recall": 0.6745283018867925,
+          "f1": 0.7460869565217392,
+          "roc_auc": 0.9636147380252051,
+          "pr_auc": 0.8313769065002524,
+          "confusion_matrix": [
+            [
+              12980,
+              170
+            ],
+            [
+              414,
+              858
+            ]
+          ]
+        }
+      },
+      "dtree": {
+        "model_name": "dtree",
+        "dataset": "clinical",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.9323472771402853,
+        "fit_seconds": 0.06257224082946777,
+        "n_train_used": 67302,
+        "params": {
+          "ccp_alpha": "0.0",
+          "class_weight": "balanced",
+          "criterion": "gini",
+          "max_depth": "10",
+          "max_features": "None",
+          "max_leaf_nodes": "None",
+          "min_impurity_decrease": "0.0",
+          "min_samples_leaf": "20",
+          "min_samples_split": "2",
+          "min_weight_fraction_leaf": "0.0",
+          "monotonic_cst": "None",
+          "random_state": "42",
+          "splitter": "best"
+        },
+        "extra_info": {},
+        "val_metrics": {
+          "accuracy": 0.9690750242684787,
+          "precision": 0.9881936245572609,
+          "recall": 0.6575019638648861,
+          "f1": 0.789622641509434,
+          "roc_auc": 0.9699852921470435,
+          "pr_auc": 0.8508830744223399,
+          "confusion_matrix": [
+            [
+              13139,
+              10
+            ],
+            [
+              436,
+              837
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.9728193038413535,
+          "precision": 0.9878048780487805,
+          "recall": 0.7004716981132075,
+          "f1": 0.8196872125114996,
+          "roc_auc": 0.9746206088432934,
+          "pr_auc": 0.8724794389311091,
+          "confusion_matrix": [
+            [
+              13139,
+              11
+            ],
+            [
+              381,
+              891
+            ]
+          ]
+        }
+      },
+      "xgboost": {
+        "model_name": "xgboost",
+        "dataset": "clinical",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.8999192118644714,
+        "fit_seconds": 0.20372676849365234,
+        "n_train_used": 67302,
+        "params": {
+          "objective": "binary:logistic",
+          "base_score": "None",
+          "booster": "None",
+          "callbacks": "None",
+          "colsample_bylevel": "None",
+          "colsample_bynode": "None",
+          "colsample_bytree": "None",
+          "device": "None",
+          "early_stopping_rounds": "None",
+          "enable_categorical": "False",
+          "eval_metric": "logloss",
+          "feature_types": "None",
+          "gamma": "None",
+          "grow_policy": "None",
+          "importance_type": "None",
+          "interaction_constraints": "None",
+          "learning_rate": "0.1",
+          "max_bin": "None",
+          "max_cat_threshold": "None",
+          "max_cat_to_onehot": "None",
+          "max_delta_step": "None",
+          "max_depth": "6",
+          "max_leaves": "None",
+          "min_child_weight": "None",
+          "missing": "nan",
+          "monotone_constraints": "None",
+          "multi_strategy": "None",
+          "n_estimators": "300",
+          "n_jobs": "-1",
+          "num_parallel_tree": "None",
+          "random_state": "42",
+          "reg_alpha": "None",
+          "reg_lambda": "None",
+          "sampling_method": "None",
+          "scale_pos_weight": "10.336028297119757",
+          "subsample": "None",
+          "tree_method": "hist",
+          "validate_parameters": "None",
+          "verbosity": "None"
+        },
+        "extra_info": {
+          "scale_pos_weight": 10.336028297119757
+        },
+        "val_metrics": {
+          "accuracy": 0.9694217168215227,
+          "precision": 0.9759725400457666,
+          "recall": 0.6700706991358995,
+          "f1": 0.7945971122496507,
+          "roc_auc": 0.9728258989644164,
+          "pr_auc": 0.8650285382258004,
+          "confusion_matrix": [
+            [
+              13128,
+              21
+            ],
+            [
+              420,
+              853
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.9721259187352655,
+          "precision": 0.96875,
+          "recall": 0.7067610062893082,
+          "f1": 0.8172727272727273,
+          "roc_auc": 0.9776293732214172,
+          "pr_auc": 0.8845928316408699,
+          "confusion_matrix": [
+            [
+              13121,
+              29
+            ],
+            [
+              373,
+              899
+            ]
+          ]
+        }
+      },
+      "lightgbm": {
+        "model_name": "lightgbm",
+        "dataset": "clinical",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.971456500872482,
+        "fit_seconds": 0.28022074699401855,
+        "n_train_used": 67302,
+        "params": {
+          "boosting_type": "gbdt",
+          "class_weight": "balanced",
+          "colsample_bytree": "1.0",
+          "importance_type": "split",
+          "learning_rate": "0.1",
+          "max_depth": "-1",
+          "min_child_samples": "20",
+          "min_child_weight": "0.001",
+          "min_split_gain": "0.0",
+          "n_estimators": "300",
+          "n_jobs": "-1",
+          "num_leaves": "63",
+          "objective": "None",
+          "random_state": "42",
+          "reg_alpha": "0.0",
+          "reg_lambda": "0.0",
+          "subsample": "1.0",
+          "subsample_for_bin": "200000",
+          "subsample_freq": "0",
+          "verbosity": "-1"
+        },
+        "extra_info": {},
+        "val_metrics": {
+          "accuracy": 0.9692830398003051,
+          "precision": 0.9987980769230769,
+          "recall": 0.6527886881382561,
+          "f1": 0.7895486935866983,
+          "roc_auc": 0.9689523849465522,
+          "pr_auc": 0.8509905046052634,
+          "confusion_matrix": [
+            [
+              13148,
+              1
+            ],
+            [
+              442,
+              831
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.9728193038413535,
+          "precision": 0.9966139954853274,
+          "recall": 0.6941823899371069,
+          "f1": 0.8183503243744208,
+          "roc_auc": 0.9744017684195423,
+          "pr_auc": 0.8748105011622767,
+          "confusion_matrix": [
+            [
+              13147,
+              3
+            ],
+            [
+              389,
+              883
+            ]
+          ]
+        }
+      },
+      "rf": {
+        "model_name": "rf",
+        "dataset": "clinical",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.7616935922019941,
+        "fit_seconds": 1.5509974956512451,
+        "n_train_used": 67302,
+        "params": {
+          "bootstrap": "True",
+          "ccp_alpha": "0.0",
+          "class_weight": "balanced_subsample",
+          "criterion": "gini",
+          "max_depth": "14",
+          "max_features": "sqrt",
+          "max_leaf_nodes": "None",
+          "max_samples": "None",
+          "min_impurity_decrease": "0.0",
+          "min_samples_leaf": "1",
+          "min_samples_split": "2",
+          "min_weight_fraction_leaf": "0.0",
+          "monotonic_cst": "None",
+          "n_estimators": "200",
+          "n_jobs": "-1",
+          "oob_score": "False",
+          "random_state": "42",
+          "verbose": "0",
+          "warm_start": "False"
+        },
+        "extra_info": {},
+        "val_metrics": {
+          "accuracy": 0.9687976702260436,
+          "precision": 0.9507119386637459,
+          "recall": 0.6818538884524745,
+          "f1": 0.7941445562671546,
+          "roc_auc": 0.9710409311321319,
+          "pr_auc": 0.8625074352275399,
+          "confusion_matrix": [
+            [
+              13104,
+              45
+            ],
+            [
+              405,
+              868
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.9714325336291777,
+          "precision": 0.9497907949790795,
+          "recall": 0.7138364779874213,
+          "f1": 0.8150807899461401,
+          "roc_auc": 0.976266590142765,
+          "pr_auc": 0.8830365613537291,
+          "confusion_matrix": [
+            [
+              13102,
+              48
+            ],
+            [
+              364,
+              908
+            ]
+          ]
+        }
+      },
+      "knn": {
+        "model_name": "knn",
+        "dataset": "clinical",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.4052126697245262,
+        "fit_seconds": 0.007357120513916016,
+        "n_train_used": 30000,
+        "params": {
+          "algorithm": "auto",
+          "leaf_size": "30",
+          "metric": "minkowski",
+          "metric_params": "None",
+          "n_jobs": "-1",
+          "n_neighbors": "15",
+          "p": "2",
+          "weights": "distance"
+        },
+        "extra_info": {
+          "subsampled_to": 30000
+        },
+        "val_metrics": {
+          "accuracy": 0.9569407849119401,
+          "precision": 0.8790697674418605,
+          "recall": 0.593872741555381,
+          "f1": 0.7088607594936709,
+          "roc_auc": 0.932704119925368,
+          "pr_auc": 0.7779449887726764,
+          "confusion_matrix": [
+            [
+              13045,
+              104
+            ],
+            [
+              517,
+              756
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.9608237415060324,
+          "precision": 0.8756641870350691,
+          "recall": 0.6477987421383647,
+          "f1": 0.7446904654315409,
+          "roc_auc": 0.9448092880885763,
+          "pr_auc": 0.8130867147498333,
+          "confusion_matrix": [
+            [
+              13033,
+              117
+            ],
+            [
+              448,
+              824
+            ]
+          ]
+        }
+      },
+      "gboost": {
+        "model_name": "gboost",
+        "dataset": "clinical",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.8734940722342049,
+        "fit_seconds": 4.317981481552124,
+        "n_train_used": 67302,
+        "params": {
+          "ccp_alpha": "0.0",
+          "criterion": "friedman_mse",
+          "init": "None",
+          "learning_rate": "0.1",
+          "loss": "log_loss",
+          "max_depth": "3",
+          "max_features": "None",
+          "max_leaf_nodes": "None",
+          "min_impurity_decrease": "0.0",
+          "min_samples_leaf": "1",
+          "min_samples_split": "2",
+          "min_weight_fraction_leaf": "0.0",
+          "n_estimators": "150",
+          "n_iter_no_change": "None",
+          "random_state": "42",
+          "subsample": "1.0",
+          "tol": "0.0001",
+          "validation_fraction": "0.1",
+          "verbose": "0",
+          "warm_start": "False"
+        },
+        "extra_info": {
+          "sample_weight": "balanced (manual)"
+        },
+        "val_metrics": {
+          "accuracy": 0.9690056857578699,
+          "precision": 0.9431330472103004,
+          "recall": 0.6904948939512962,
+          "f1": 0.7972789115646258,
+          "roc_auc": 0.9758091096446869,
+          "pr_auc": 0.8759500783443226,
+          "confusion_matrix": [
+            [
+              13096,
+              53
+            ],
+            [
+              394,
+              879
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.9715018721397864,
+          "precision": 0.9470404984423676,
+          "recall": 0.7169811320754716,
+          "f1": 0.8161073825503355,
+          "roc_auc": 0.9798798036683645,
+          "pr_auc": 0.892199342749971,
+          "confusion_matrix": [
+            [
+              13099,
+              51
+            ],
+            [
+              360,
+              912
+            ]
+          ]
+        }
+      },
+      "svm": {
+        "model_name": "svm",
+        "dataset": "clinical",
+        "imbalance_strategy": "class_weight/scale_pos_weight (balanced)",
+        "threshold": 0.3583354971229474,
+        "fit_seconds": 0.811633825302124,
+        "n_train_used": 6000,
+        "params": {
+          "C": "1.0",
+          "break_ties": "False",
+          "cache_size": "200",
+          "class_weight": "balanced",
+          "coef0": "0.0",
+          "decision_function_shape": "ovr",
+          "degree": "3",
+          "gamma": "scale",
+          "kernel": "rbf",
+          "max_iter": "-1",
+          "probability": "True",
+          "random_state": "42",
+          "shrinking": "True",
+          "tol": "0.001",
+          "verbose": "False"
+        },
+        "extra_info": {
+          "subsampled_to": 6000
+        },
+        "val_metrics": {
+          "accuracy": 0.9350991540701705,
+          "precision": 0.6180798878766643,
+          "recall": 0.6928515318146111,
+          "f1": 0.6533333333333333,
+          "roc_auc": 0.9463564832513347,
+          "pr_auc": 0.697166316126076,
+          "confusion_matrix": [
+            [
+              12604,
+              545
+            ],
+            [
+              391,
+              882
+            ]
+          ]
+        },
+        "test_metrics": {
+          "accuracy": 0.9378033559839135,
+          "precision": 0.627637848876787,
+          "recall": 0.7248427672955975,
+          "f1": 0.6727471725647574,
+          "roc_auc": 0.952204545998039,
+          "pr_auc": 0.7222602910969167,
+          "confusion_matrix": [
+            [
+              12603,
+              547
+            ],
+            [
+              350,
+              922
+            ]
+          ]
+        }
+      }
+    }
+  }
+}

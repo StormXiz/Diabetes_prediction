@@ -1,0 +1,28 @@
+# --- Python / entorno ---
+venv/
+diabetes_env/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# --- Datasets pesados (no versionar en git; documentar fuente en README) ---
+Datasets/*.csv
+
+# --- Artefactos intermedios de entrenamiento (cache, no son el entregable final) ---
+ml/artifacts/
+
+# --- Artefactos finales del modelo (pueden pesar varios MB; opcional versionarlos con Git LFS) ---
+# Backend/api/models/*.joblib
+
+# --- Node / frontend ---
+node_modules/
+.next/
+out/
+
+# --- Variables de entorno / secretos ---
+.env
+.env.local
+.env*.local
+
+# --- OS ---
+.DS_Store
