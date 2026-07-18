@@ -1,13 +1,17 @@
 @import "tailwindcss";
 
+/* Variante "dark" activada por clase (.dark), no por prefers-color-scheme del
+   SO — así el resto del sitio (landing, auth, predict, admin) se queda
+   siempre en claro, y solo /diets usa esto vía <ThemeToggle>. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --color-brand-green: #059669;
   --color-brand-green-dark: #047857;
   --color-brand-blue: #2563eb;
-  --color-bg: #f1f5f4;
 }
 
-body {
-  background-color: var(--color-bg);
-  color: #0f172a;
-}
+/* El fondo/color de <body> ahora se controla con clases de Tailwind en
+   layout.tsx (bg-white / dark:bg-slate-950) para que el toggle de tema
+   funcione — una regla CSS plana aquí (sin @layer) le gana a esas utilidades
+   sin importar la especificidad, por las reglas de cascade layers. */

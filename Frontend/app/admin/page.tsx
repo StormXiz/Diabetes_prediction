@@ -1,32 +1,19 @@
-import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
+import { parseDashboardStats } from "@/lib/admin";
+import { DashboardStory } from "@/components/admin/DashboardStory";
 
 export default async function AdminPage() {
   const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { data, error } = await supabase.rpc("admin_dashboard_stats");
 
-  if (!user) redirect("/login?redirect=/admin");
+  if (error || data === null) {
+    return (
+      <div className="rounded-2xl border border-red-100 bg-red-50 p-6 text-center text-sm text-red-700">
+        No se pudieron cargar las estadísticas del panel
+        {error ? `: ${error.message}` : "."}
+      </div>
+    );
+  }
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("role")
-    .eq("id", user.id)
-    .single();
-
-  // Igual que en /predict: el middleware ya filtra, esto es la segunda capa
-  // de verificación de rol EN SERVIDOR [PLAN_MAESTRO sec 12] — nunca basta
-  // con esconder un botón en el cliente.
-  if (profile?.role !== "admin") redirect("/");
-
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center gap-4 px-6 text-center">
-      <h1 className="text-2xl font-bold text-slate-900">Panel de administración</h1>
-      <p className="max-w-md text-slate-600">
-        CRUD de dietas/alimentos y estadísticas llegan en la Fase 7. Esta pantalla ya confirma que
-        el control de rol admin funciona de verdad en el servidor.
-      </p>
-    </main>
-  );
+  return <DashboardStory stats={parseDashboardStats(data)} />;
 }

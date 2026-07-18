@@ -81,10 +81,37 @@ update public.profiles set role = 'admin' where id = (
 );
 ```
 
-## 7. Pendiente para próximas fases
+## 7. RPC `admin_dashboard_stats()` — Fase 7
 
-- Fase 2 (API FastAPI): usar `NEXT_PUBLIC_SUPABASE_URL` + verificar el JWT de Supabase (JWKS) en
-  cada request a `/predict/*`.
-- Fase 4 (Frontend): usar `@supabase/supabase-js` con la anon/publishable key de arriba.
+Función SQL que devuelve TODO lo que necesita el dashboard admin en una sola llamada (evita que
+el frontend haga media docena de queries sueltas). Protegida en base de datos: si quien llama no
+tiene `role='admin'`, lanza excepción `not authorized` (verificado — probé la llamada sin sesión
+de admin y falló como debía).
+
+**Contrato (para quien construya el frontend):**
+```ts
+const { data, error } = await supabase.rpc('admin_dashboard_stats')
+// data: {
+//   total_users: number
+//   total_predictions: number
+//   predictions_by_module: { lifestyle?: number; clinical?: number }
+//   risk_distribution: { low?: number; moderate?: number; high?: number }
+//   predictions_last_14_days: { date: string; count: number }[]   // para un sparkline/gráfica de tendencia
+//   diets_total: number
+//   diets_published: number
+//   foods_total: number
+// }
+```
+
+CRUD de `diets`/`foods` (crear, editar, publicar/despublicar, borrar) NO necesita una función
+especial: se hace con inserts/updates/deletes normales del cliente Supabase — la RLS ya solo deja
+hacerlo si `role='admin'` (políticas `diets_write_admin_only` / `foods_write_admin_only`).
+
+## 8. Pendiente / recomendado
+
 - Cuando exista tu usuario real, avísame para ejecutar el `UPDATE` de admin y para reasignar
   `created_by` de las 3 dietas semilla a tu `user_id`.
+- **Recomendado (2 min, dashboard):** el linter de seguridad marca "Leaked Password Protection
+  Disabled" — en **Authentication → Sign In / Providers → Email**, activa la verificación contra
+  HaveIBeenPwned para que no se puedan usar contraseñas ya filtradas. Es otro ajuste de Auth que
+  no puedo tocar yo por API, igual que la plantilla de email.

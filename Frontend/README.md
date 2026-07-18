@@ -59,12 +59,27 @@ skills instaladas, puedes correr `/impeccable audit` sobre lo que ya hice como u
 Animaciones: scroll-reveal narrativo (~600ms, una vez por sección) en `Reveal.tsx`, y
 micro-interacciones de botones/CTA (<300ms, easing personalizado) en los `<Link>`/`<button>`.
 
-## Fase 6 y 7 (siguen pendientes)
+## Fase 6 — predicción y dietas (ya construida)
 
-- **Fase 6:** formularios reales de `/predict/lifestyle` y `/predict/clinical` conectados a la
-  API (`NEXT_PUBLIC_API_URL` ya está en `.env.local.example`), página de resultados, galería de
-  dietas.
-- **Fase 7:** CRUD real del panel admin + stats.
+- `/predict` → selector de módulo (estilo de vida / clínico).
+- `/predict/lifestyle` y `/predict/clinical` → formularios reales con los campos exactos que
+  espera la API, agrupados por sección, validación de rangos, feedback de error legible.
+- Al enviar: llama a la API con el `access_token` de la sesión (`lib/api.ts`), guarda el resultado
+  en `predictions` (RLS: solo tú lo ves) y redirige a `/result/[id]`.
+- `/result/[id]` → gauge animado con el % de riesgo, categoría con color, factores que más
+  influyeron (SHAP local, con flechas de sube/baja riesgo), disclaimer, y botón a la dieta
+  recomendada según tu categoría (tabla `recommendations`).
+- `/diets` y `/diets/[slug]` → galería pública de dietas (lectura sin login, por RLS) con
+  alimentos recomendados/a evitar.
+
+Verificado: `npm run build` sin errores con las 11 rutas (antes eran 7); tuve que corregir un tipo
+(`input_data` no aceptaba `Record<string, unknown>` directo contra el tipo `Json` generado por
+Supabase — ahora se serializa con `JSON.parse(JSON.stringify(...))` antes de insertar).
+
+## Fase 7 (pendiente)
+
+CRUD real del panel admin (`/admin/diets`) + estadísticas (usuarios, predicciones, distribución de
+riesgo).
 
 ## Desplegar en Railway (decisión de Angel)
 

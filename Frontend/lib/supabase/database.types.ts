@@ -174,7 +174,8 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      is_admin: { Args: never; Returns: boolean }
+      admin_dashboard_stats: { Args: Record<PropertyKey, never>; Returns: Json }
+      is_admin: { Args: Record<PropertyKey, never>; Returns: boolean }
       update_my_profile: {
         Args: { new_full_name: string }
         Returns: {
