@@ -125,18 +125,69 @@ export type Database = {
           full_name: string | null
           id: string
           role: string
+          weight_kg: number | null
+          height_cm: number | null
+          age: number | null
+          sex: "male" | "female" | null
+          activity_level: "sedentary" | "light" | "moderate" | "active" | "very_active" | null
+          dietary_restrictions: string[]
         }
         Insert: {
           created_at?: string
           full_name?: string | null
           id: string
           role?: string
+          weight_kg?: number | null
+          height_cm?: number | null
+          age?: number | null
+          sex?: "male" | "female" | null
+          activity_level?: "sedentary" | "light" | "moderate" | "active" | "very_active" | null
+          dietary_restrictions?: string[]
         }
         Update: {
           created_at?: string
           full_name?: string | null
           id?: string
           role?: string
+          weight_kg?: number | null
+          height_cm?: number | null
+          age?: number | null
+          sex?: "male" | "female" | null
+          activity_level?: "sedentary" | "light" | "moderate" | "active" | "very_active" | null
+          dietary_restrictions?: string[]
+        }
+        Relationships: []
+      }
+      generated_meal_plans: {
+        Row: {
+          id: string
+          user_id: string
+          risk_category: string
+          tdee: number
+          target_calories: number
+          dietary_restrictions: string[]
+          plan: Json
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          risk_category: string
+          tdee: number
+          target_calories: number
+          dietary_restrictions?: string[]
+          plan: Json
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          risk_category?: string
+          tdee?: number
+          target_calories?: number
+          dietary_restrictions?: string[]
+          plan?: Json
+          created_at?: string
         }
         Relationships: []
       }
@@ -184,6 +235,17 @@ export type Database = {
           id: string
           role: string
         }
+      }
+      update_my_biometrics: {
+        Args: {
+          p_weight_kg: number | null
+          p_height_cm: number | null
+          p_age: number | null
+          p_sex: string | null
+          p_activity_level: string | null
+          p_dietary_restrictions: string[]
+        }
+        Returns: undefined
       }
     }
     Enums: {

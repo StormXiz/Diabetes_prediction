@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { SiteNav } from "@/components/SiteNav";
+import { FloatingChatWidget } from "@/components/FloatingChatWidget";
 
 export const metadata: Metadata = {
   title: "DiabetesRisk — Orientación sobre riesgo de diabetes tipo 2",
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <SiteNav />
           {children}
+          <FloatingChatWidget />
         </ThemeProvider>
       </body>
     </html>

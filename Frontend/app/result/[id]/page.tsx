@@ -2,6 +2,8 @@ import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { RISK_META } from "@/lib/risk";
+import { GuideChatbot } from "@/components/GuideChatbot";
+import { riskToLevel } from "@/lib/data/diet_guidance";
 
 type TopFactor = { feature: string; impact: number; direction: "increases_risk" | "decreases_risk" };
 
@@ -96,6 +98,14 @@ export default async function ResultPage({ params }: { params: Promise<{ id: str
       <Link href="/predict" className="mt-4 block text-center text-sm font-medium text-blue-600 hover:underline dark:text-blue-400">
         Hacer otra predicción
       </Link>
+
+      <GuideChatbot
+        ctx={{
+          level: riskToLevel(prediction.risk_category),
+          percent,
+          topFactors: topFactors.map((f) => ({ feature: f.feature, direction: f.direction })),
+        }}
+      />
     </main>
   );
 }

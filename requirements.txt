@@ -9,7 +9,11 @@
 # --- Núcleo de datos / ML ---
 numpy>=1.26
 pandas>=2.2
-scikit-learn>=1.5
+# Fijado a 1.7.2 exacto (no >=1.5): los modelos .joblib se entrenaron y
+# serializaron con esta versión. Una versión distinta solo genera warnings de
+# InconsistentVersionWarning por ahora, pero scikit-learn advierte que puede
+# dar resultados distintos entre versiones — mejor fijarla que arriesgar.
+scikit-learn==1.7.2
 scipy>=1.13
 
 # --- Modelos de boosting ---

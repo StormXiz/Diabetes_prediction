@@ -84,22 +84,22 @@ export default function ClinicalForm() {
 
       <form onSubmit={handleSubmit} className="mt-10 space-y-10">
         <FormSection title="Datos básicos">
-          <NumberField label="Edad (años)" min={0} max={110} value={form.age} onChange={set("age")} />
-          <SelectField label="Sexo" value={form.gender} onChange={set("gender")} options={[
+          <NumberField label="Edad (años)" info="Tu edad actual en años cumplidos." min={0} max={110} value={form.age} onChange={set("age")} />
+          <SelectField label="Sexo" info="Sexo registrado en tu historia clínica, tal como lo maneja el dataset con el que se entrenó el modelo." value={form.gender} onChange={set("gender")} options={[
             { value: "Female", label: "Mujer" }, { value: "Male", label: "Hombre" }, { value: "Other", label: "Otro" },
           ]} />
-          <NumberField label="IMC (índice de masa corporal)" help="Peso(kg) / estatura(m)²" min={10} max={80} step={0.1} value={form.bmi} onChange={set("bmi")} />
+          <NumberField label="IMC (índice de masa corporal)" info="Fórmula: IMC = peso en kilogramos ÷ (estatura en metros)². Por ejemplo, 70 kg y 1.70 m dan un IMC de 70 ÷ (1.70 × 1.70) ≈ 24.2." help="Peso(kg) / estatura(m)²" min={10} max={80} step={0.1} value={form.bmi} onChange={set("bmi")} />
         </FormSection>
 
         <FormSection title="Laboratorio">
-          <NumberField label="HbA1c (%)" help="Hemoglobina glicosilada, de tu análisis de sangre" min={3} max={20} step={0.1} value={form.HbA1c_level} onChange={set("HbA1c_level")} />
-          <NumberField label="Glucosa en sangre (mg/dL)" min={40} max={400} value={form.blood_glucose_level} onChange={set("blood_glucose_level")} />
+          <NumberField label="HbA1c (%)" info="Hemoglobina glicosilada: refleja tu promedio de glucosa de los últimos 2-3 meses. Aparece en cualquier análisis de sangre de rutina. Valores de referencia: menos de 5.7% normal, 5.7-6.4% prediabetes, 6.5%+ diabetes." help="Hemoglobina glicosilada, de tu análisis de sangre" min={3} max={20} step={0.1} value={form.HbA1c_level} onChange={set("HbA1c_level")} />
+          <NumberField label="Glucosa en sangre (mg/dL)" info="Nivel de azúcar en sangre de tu último análisis. En ayunas: menos de 100 es normal, 100-125 prediabetes, 126+ diabetes. Si tu análisis está en mmol/L, multiplica por 18 para convertir." min={40} max={400} value={form.blood_glucose_level} onChange={set("blood_glucose_level")} />
         </FormSection>
 
         <FormSection title="Antecedentes">
-          <YesNoField label="Hipertensión (presión arterial alta)" value={form.hypertension} onChange={set("hypertension")} />
-          <YesNoField label="Enfermedad cardíaca" value={form.heart_disease} onChange={set("heart_disease")} />
-          <SelectField label="Historial de tabaquismo" value={form.smoking_history} onChange={set("smoking_history")} options={[
+          <YesNoField label="Hipertensión (presión arterial alta)" info="Que un médico te haya diagnosticado presión arterial alta en algún momento." value={form.hypertension} onChange={set("hypertension")} />
+          <YesNoField label="Enfermedad cardíaca" info="Cualquier enfermedad del corazón diagnosticada por un médico (coronaria, infarto previo, etc.). Se pregunta solo como antecedente para el cálculo." value={form.heart_disease} onChange={set("heart_disease")} />
+          <SelectField label="Historial de tabaquismo" info="Las categorías son las del registro clínico original con el que se entrenó el modelo. Elige la que mejor te describa." value={form.smoking_history} onChange={set("smoking_history")} options={[
             { value: "never", label: "Nunca he fumado" },
             { value: "former", label: "Fumaba, ya no" },
             { value: "current", label: "Fumo actualmente" },
