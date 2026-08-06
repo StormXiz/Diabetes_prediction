@@ -17,5 +17,7 @@ COPY . .
 
 EXPOSE 8000
 
-# Sin --reload: eso es solo para desarrollo local.
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Sin --reload: eso es solo para desarrollo local. Forma shell (no exec) a
+# propósito: así SÍ se expande $PORT si el entorno lo define (ej. Railway);
+# localmente/Docker Compose, donde no hay $PORT, cae al 8000 de siempre.
+CMD uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}
