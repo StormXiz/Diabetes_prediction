@@ -1,14 +1,6 @@
 import Link from "next/link";
-import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
 
-export default async function PredictSelectorPage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect("/login?redirect=/predict");
-
+export default function PredictSelectorPage() {
   return (
     <main className="mx-auto flex min-h-screen max-w-3xl flex-col items-center justify-center px-6 py-20 text-center">
       <p className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">

@@ -80,6 +80,19 @@ export function DietDetailView({ diet, foods }: { diet: Diet; foods: Food[] }) {
                   {avoid.length > 0 && <Stat value={avoid.length} label="A moderar" color="#94a3b8" />}
                 </Reveal>
               )}
+
+              <Reveal delay={0.12} className="mt-8">
+                <a
+                  href="#tu-plan"
+                  className="inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold text-white shadow-md transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.02] active:scale-[0.98]"
+                  style={{ background: `linear-gradient(90deg, ${meta.color}, #2563eb)` }}
+                >
+                  Genera tu plan de la semana
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                    <path d="M12 5v14M5 12l7 7 7-7" />
+                  </svg>
+                </a>
+              </Reveal>
             </div>
 
             <Reveal delay={0.1}>
@@ -114,7 +127,12 @@ export function DietDetailView({ diet, foods }: { diet: Diet; foods: Food[] }) {
           <Reveal delay={0.15} className="mt-10">
             <details className="group rounded-2xl border border-slate-200 dark:border-slate-800">
               <summary className="flex cursor-pointer list-none items-center justify-between px-5 py-4 text-sm font-semibold text-slate-600 marker:content-none dark:text-slate-300">
-                Qué conviene moderar
+                <span className="flex items-center gap-2">
+                  Qué conviene moderar
+                  <span className="rounded-full bg-slate-100 px-2 py-0.5 text-xs font-bold text-slate-500 dark:bg-slate-800 dark:text-slate-400">
+                    {avoid.length}
+                  </span>
+                </span>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="transition-transform duration-200 group-open:rotate-180" aria-hidden>
                   <path d="m6 9 6 6 6-6" />
                 </svg>
@@ -133,7 +151,7 @@ export function DietDetailView({ diet, foods }: { diet: Diet; foods: Food[] }) {
           médico antes de hacer cambios importantes en tu dieta.
         </Reveal>
 
-        <Reveal delay={0.25} className="mt-14">
+        <Reveal id="tu-plan" delay={0.25} className="mt-14 scroll-mt-20">
           <div className="flex items-center gap-3">
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-blue-600 text-white shadow-md shadow-emerald-500/20">
               <CalendarIcon />
@@ -146,7 +164,7 @@ export function DietDetailView({ diet, foods }: { diet: Diet; foods: Food[] }) {
             </div>
           </div>
           <div className="mt-6">
-            <WeeklyDietPlanner riskLevel={riskToLevel(diet.target_risk)} />
+            <WeeklyDietPlanner riskLevel={riskToLevel(diet.target_risk)} dietTitle={diet.title} />
           </div>
         </Reveal>
       </div>

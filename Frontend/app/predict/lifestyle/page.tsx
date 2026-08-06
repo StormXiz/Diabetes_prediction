@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FormSection, NumberField, SelectField, YesNoField } from "@/components/forms";
+import { FormSection, FormProgress, NumberField, SelectField, YesNoField } from "@/components/forms";
 import { BmiCalculatorModal } from "@/components/BmiCalculatorModal";
 import { bmiCategory } from "@/lib/bmi";
 import { predictLifestyle, ApiError } from "@/lib/api";
-import { createClient } from "@/lib/supabase/client";
+import { saveLastPredictionResult } from "@/lib/predictionResult";
 
 type Form = {
   BMI: number | "";
@@ -73,7 +73,7 @@ const INCOME_OPTIONS = [
 // Para poder decir exactamente qué falta cuando el botón está deshabilitado
 // — antes se quedaba en gris sin ninguna pista de qué campo revisar.
 const FIELD_LABELS: Record<keyof Form, string> = {
-  BMI: "IMC", MentHlth: "Días de mala salud mental", PhysHlth: "Días de mala salud física",
+  BMI: "IMC", MentHlth: "Días de estrés/tristeza", PhysHlth: "Días enfermo o con dolor",
   HighBP: "Presión arterial alta", HighChol: "Colesterol alto", CholCheck: "Revisión de colesterol",
   Smoker: "Historial de tabaquismo", Stroke: "Antecedente de ACV",
   HeartDiseaseorAttack: "Antecedente de enfermedad cardíaca", PhysActivity: "Actividad física",
@@ -104,24 +104,8 @@ export default function LifestyleForm() {
     try {
       const payload = form as Record<string, number>;
       const result = await predictLifestyle(payload);
-
-      const supabase = createClient();
-      const { data: { user } } = await supabase.auth.getUser();
-      const { data, error: insertError } = await supabase
-        .from("predictions")
-        .insert({
-          user_id: user!.id,
-          module: "lifestyle",
-          input_data: JSON.parse(JSON.stringify(payload)),
-          risk_score: result.risk_score,
-          risk_category: result.risk_category,
-          top_factors: result.top_factors,
-        })
-        .select("id")
-        .single();
-
-      if (insertError) throw insertError;
-      router.push(`/result/${data.id}`);
+      saveLastPredictionResult(result);
+      router.push("/result");
     } catch (err) {
       setError(err instanceof ApiError ? err.message : "Algo salió mal. Intenta de nuevo.");
     } finally {
@@ -140,7 +124,9 @@ export default function LifestyleForm() {
         con exactitud. Si un campo no queda claro, toca el círculo con la "i" junto a la pregunta.
       </p>
 
-      <form onSubmit={handleSubmit} className="mt-10 space-y-10">
+      <FormProgress done={Object.keys(EMPTY).length - missingFields.length} total={Object.keys(EMPTY).length} />
+
+      <form onSubmit={handleSubmit} className="mt-10 space-y-6">
         <FormSection title="Medidas básicas">
           <NumberField
             label="IMC (índice de masa corporal)"
@@ -162,20 +148,20 @@ export default function LifestyleForm() {
             <button
               type="button"
               onClick={() => setBmiModalOpen(true)}
-              className="mt-1.5 block text-xs font-semibold text-blue-600 hover:underline dark:text-blue-400"
+              className="mt-1.5 block cursor-pointer text-xs font-semibold text-blue-600 hover:underline dark:text-blue-400"
             >
               ¿No sabes tu IMC? Calcúlalo aquí →
             </button>
           </NumberField>
           <SelectField
-            label="Edad"
+            label="¿En qué rango de edad estás?"
             info="Rango de edad en grupos de 5 años, tal como lo pide el cuestionario original en el que se entrenó el modelo."
             value={form.Age}
             onChange={set("Age")}
             options={AGE_BUCKETS}
           />
           <SelectField
-            label="Sexo"
+            label="¿Cuál es tu sexo?"
             info="Sexo registrado al nacer, tal como lo pide el cuestionario original."
             value={form.Sex}
             onChange={set("Sex")}
@@ -195,23 +181,23 @@ export default function LifestyleForm() {
             ]}
           />
           <NumberField
-            label="Días de mala salud mental (últimos 30)"
-            info="Días del último mes en que tu estado de ánimo, estrés o problemas emocionales afectaron tu bienestar."
+            label="En el último mes, ¿cuántos días te sentiste estresado, triste o ansioso?"
+            info="Piensa en los últimos 30 días: cuenta los días en que te sentiste mal de ánimo, con estrés, ansiedad o angustia — aunque haya sido solo un rato ese día. Si no recuerdas ninguno, pon 0."
             min={0}
             max={30}
             value={form.MentHlth}
             onChange={set("MentHlth")}
           />
           <NumberField
-            label="Días de mala salud física (últimos 30)"
-            info="Días del último mes en que tuviste alguna enfermedad o lesión física (sin contar salud mental)."
+            label="En el último mes, ¿cuántos días te sentiste enfermo o con dolor físico?"
+            info="Piensa en los últimos 30 días: cuenta los días en que tuviste algún malestar del cuerpo — dolor, gripe, lesión, cansancio fuera de lo normal, etc. No cuentes lo que ya respondiste sobre tu ánimo. Si no recuerdas ninguno, pon 0."
             min={0}
             max={30}
             value={form.PhysHlth}
             onChange={set("PhysHlth")}
           />
           <YesNoField
-            label="Dificultad seria para caminar/subir escaleras"
+            label="¿Tienes dificultad seria para caminar o subir escaleras?"
             info="Una dificultad sostenida en el tiempo, no un tropiezo puntual."
             value={form.DiffWalk}
             onChange={set("DiffWalk")}
@@ -220,32 +206,31 @@ export default function LifestyleForm() {
 
         <FormSection title="Antecedentes médicos">
           <YesNoField
-            label="Presión arterial alta"
-            info="Que un profesional de salud te haya dicho alguna vez que tienes la presión alta (hipertensión)."
+            label="¿Un profesional de salud te ha dicho que tienes la presión arterial alta?"
+            info="También conocida como hipertensión."
             value={form.HighBP}
             onChange={set("HighBP")}
           />
           <YesNoField
-            label="Colesterol alto"
-            info="Que un profesional de salud te haya dicho alguna vez que tienes el colesterol alto."
+            label="¿Un profesional de salud te ha dicho que tienes el colesterol alto?"
             value={form.HighChol}
             onChange={set("HighChol")}
           />
           <YesNoField
-            label="Revisión de colesterol en los últimos 5 años"
-            info="Si te han hecho un análisis de sangre para medir el colesterol en ese período, sin importar el resultado."
+            label="¿Te han revisado el colesterol en los últimos 5 años?"
+            info="Un análisis de sangre para medir el colesterol en ese período, sin importar el resultado."
             value={form.CholCheck}
             onChange={set("CholCheck")}
           />
           <YesNoField
-            label="Antecedente de ACV (accidente cerebrovascular)"
-            info="Si alguna vez un médico te diagnosticó un ACV. Es una condición de la que muchas personas se recuperan y viven con normalidad — se pregunta solo como antecedente para el cálculo, no implica nada sobre tu estado actual."
+            label="¿Alguna vez un médico te diagnosticó un ACV (accidente cerebrovascular)?"
+            info="Es una condición de la que muchas personas se recuperan y viven con normalidad — se pregunta solo como antecedente para el cálculo, no implica nada sobre tu estado actual."
             value={form.Stroke}
             onChange={set("Stroke")}
           />
           <YesNoField
-            label="Antecedente de enfermedad cardíaca"
-            info="Incluye haber tenido un ataque cardíaco o cualquier enfermedad coronaria diagnosticada por un médico. Es una condición tratable de la que mucha gente vive bien después — se pregunta solo como antecedente para el cálculo."
+            label="¿Alguna vez tuviste un ataque cardíaco o enfermedad coronaria diagnosticada?"
+            info="Es una condición tratable de la que mucha gente vive bien después — se pregunta solo como antecedente para el cálculo."
             value={form.HeartDiseaseorAttack}
             onChange={set("HeartDiseaseorAttack")}
           />
@@ -259,26 +244,26 @@ export default function LifestyleForm() {
             onChange={set("Smoker")}
           />
           <YesNoField
-            label="Consumo excesivo de alcohol"
+            label="¿Consumes alcohol en exceso?"
             info="Definición estándar: más de 14 tragos por semana en hombres, o más de 7 tragos por semana en mujeres."
             value={form.HvyAlcoholConsump}
             onChange={set("HvyAlcoholConsump")}
           />
           <YesNoField
-            label="Actividad física en los últimos 30 días"
+            label="¿Hiciste actividad física en los últimos 30 días?"
             info="Cualquier ejercicio o actividad física fuera de tu trabajo habitual (caminar, deporte, gimnasio, etc.)."
             value={form.PhysActivity}
             onChange={set("PhysActivity")}
           />
           <YesNoField
-            label="Consumes fruta al menos 1 vez al día"
-            info="En un día típico, no solo hoy."
+            label="¿Comes fruta al menos una vez al día?"
+            info="Pensando en un día típico, no solo en hoy."
             value={form.Fruits}
             onChange={set("Fruits")}
           />
           <YesNoField
-            label="Consumes vegetales al menos 1 vez al día"
-            info="En un día típico, no solo hoy."
+            label="¿Comes vegetales al menos una vez al día?"
+            info="Pensando en un día típico, no solo en hoy."
             value={form.Veggies}
             onChange={set("Veggies")}
           />
@@ -286,27 +271,27 @@ export default function LifestyleForm() {
 
         <FormSection title="Acceso a salud y contexto">
           <YesNoField
-            label="Tienes algún seguro/cobertura de salud"
+            label="¿Tienes algún seguro o cobertura de salud?"
             info="Cualquier tipo de seguro médico, público o privado, o cobertura equivalente."
             value={form.AnyHealthcare}
             onChange={set("AnyHealthcare")}
           />
           <YesNoField
-            label="No fuiste al médico por el costo (último año)"
-            info="Si en los últimos 12 meses necesitaste ver a un médico pero no fuiste por el costo."
+            label="¿En el último año dejaste de ir al médico por el costo?"
+            info="Si en los últimos 12 meses necesitaste ver a un médico pero no fuiste por el dinero que costaba."
             value={form.NoDocbcCost}
             onChange={set("NoDocbcCost")}
           />
           <SelectField
-            label="Nivel educativo"
-            info="Nivel más alto que completaste, en las categorías del cuestionario original en el que se entrenó el modelo."
+            label="¿Cuál es el nivel educativo más alto que completaste?"
+            info="En las categorías del cuestionario original en el que se entrenó el modelo."
             value={form.Education}
             onChange={set("Education")}
             options={EDUCATION_OPTIONS}
           />
           <SelectField
-            label="Rango de ingresos anuales"
-            info="Ingreso anual total del hogar, en dólares estadounidenses (así lo define el cuestionario original de EE. UU.). Si no vives en EE. UU., elige el rango que más se acerque a tu situación económica relativa."
+            label="¿En qué rango están tus ingresos anuales?"
+            info="Ingreso anual total del hogar, en dólares estadounidenses (así lo define el cuestionario original de EE. UU.). Si no vives en EE. UU., elige el rango que más se acerque a tu situación económica relativa. Esto ayuda al modelo porque el acceso a alimentación y atención médica varía con el ingreso — no se usa para nada más."
             value={form.Income}
             onChange={set("Income")}
             options={INCOME_OPTIONS}
@@ -324,9 +309,9 @@ export default function LifestyleForm() {
         <button
           type="submit"
           disabled={loading || !isComplete}
-          className="w-full rounded-full bg-gradient-to-r from-emerald-600 to-blue-600 py-3.5 font-semibold text-white shadow-md transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50 disabled:hover:scale-100"
+          className="w-full cursor-pointer rounded-full bg-gradient-to-r from-emerald-600 to-blue-600 py-3.5 font-semibold text-white shadow-md transition-transform duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.01] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
         >
-          {loading ? "Calculando..." : "Ver mi estimación de riesgo"}
+          {loading ? "Calculando…" : "Ver mi estimación de riesgo"}
         </button>
         <p className="text-center text-xs text-slate-400 dark:text-slate-500">
           Esta plataforma ofrece una estimación orientativa, no un diagnóstico médico.

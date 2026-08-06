@@ -1,8 +1,5 @@
-// Cliente ligero para hablar con la API FastAPI [PLAN_MAESTRO sec 7].
-// Adjunta el access_token de la sesión de Supabase como Bearer token — la API
-// lo valida de verdad (ver Backend/api/auth.py), no es solo un adorno.
-import { createClient } from "@/lib/supabase/client";
-
+// Cliente ligero para hablar con la API FastAPI. Sin login: los endpoints
+// /predict/* son públicos, no se manda ningún token de sesión.
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000";
 
 export type TopFactor = {
@@ -15,6 +12,7 @@ export type PredictionResult = {
   module: "lifestyle" | "clinical";
   risk_score: number;
   risk_category: "low" | "moderate" | "high";
+  threshold_used: number;
   top_factors: TopFactor[];
   disclaimer: string;
 };
@@ -27,26 +25,12 @@ export class ApiError extends Error {
   }
 }
 
-async function authHeader(): Promise<Record<string, string>> {
-  const supabase = createClient();
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  if (!session) {
-    throw new ApiError("No hay sesión activa. Inicia sesión de nuevo.", 401);
-  }
-  return { Authorization: `Bearer ${session.access_token}` };
-}
-
 async function postPrediction(path: string, payload: Record<string, unknown>): Promise<PredictionResult> {
-  const headers = await authHeader();
-
   let res: Response;
   try {
     res = await fetch(`${API_URL}${path}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", ...headers },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
   } catch {

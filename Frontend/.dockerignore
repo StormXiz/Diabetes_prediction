@@ -1,0 +1,12 @@
+node_modules/
+.next/
+out/
+.env
+.env.local
+.env*.local
+serve.log
+.git
+.claude
+.agents
+Dockerfile
+.dockerignore

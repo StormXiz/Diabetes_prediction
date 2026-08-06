@@ -1,0 +1,51 @@
+# Levanta todo el proyecto con un solo comando:
+#   docker compose up --build
+#
+# Requiere un archivo .env en esta misma carpeta (junto a este docker-compose.yml)
+# con las variables de abajo — ver .env.example.
+#
+# IMPORTANTE sobre NEXT_PUBLIC_API_URL: las predicciones se piden desde el
+# NAVEGADOR del usuario (no desde el servidor de Next.js), así que esa URL
+# tiene que ser una que el navegador pueda resolver de verdad. En local, eso
+# es "http://localhost:8000" (el puerto publicado abajo) — NO el nombre
+# interno del servicio Docker "backend", que solo resuelve DENTRO de la red
+# de contenedores. En producción (Railway u otro), debe ser la URL pública
+# real del servicio backend.
+
+services:
+  backend:
+    build:
+      context: ./Backend/api
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      # Sin login: /predict/* es público, el backend no verifica sesión de
+      # Supabase (no necesita SUPABASE_URL/ANON_KEY/JWT_SECRET).
+      FRONTEND_ORIGINS: ${FRONTEND_ORIGINS:-http://localhost:3000}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+        # Ver nota arriba: apunta al puerto publicado en el host, no al
+        # nombre del servicio Docker.
+        NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-5-mini}
+    depends_on:
+      backend:
+        condition: service_healthy

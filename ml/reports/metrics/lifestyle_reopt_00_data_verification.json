@@ -1,0 +1,32 @@
+{
+  "raw_rows": 253680,
+  "raw_nulls": 0,
+  "raw_duplicates": 23899,
+  "raw_target_distribution_3class": {
+    "0.0": 0.8424116997792495,
+    "1.0": 0.018255282245348472,
+    "2.0": 0.13933301797540207
+  },
+  "binary_positive_rate": {
+    "train": 0.17288586598361166,
+    "val": 0.17289001073490584,
+    "test": 0.1728849947777649
+  },
+  "imbalance_ratio_train (neg:pos)": 4.78,
+  "exact_row_overlap_train_test": 419,
+  "shapes": {
+    "train": [
+      160846,
+      21
+    ],
+    "val": [
+      34467,
+      21
+    ],
+    "test": [
+      34468,
+      21
+    ]
+  },
+  "conclusion": "Sin nulos en el crudo. Duplicados y BMI fuera de rango ya se limpian en prep_lifestyle.py (ver lifestyle_prep_report.json: 23,899 duplicados removidos, 584 BMI imposibles imputados). Split estratificado 70/15/15 hecho ANTES de fit_transform del preprocesador -> sin fuga. Desbalance real ~1:4.8 (17.3% positivos) confirmado en las 3 particiones por igual (estratificaci\u00f3n correcta)."
+}

@@ -12,14 +12,12 @@ const LINKS = [
 ];
 
 /**
- * Barra de navegación global (landing, auth, predict, result, diets). No se
- * muestra en /admin, que ya tiene su propio AdminNav especializado.
+ * Barra de navegación global (landing, predict, result, diets). Sin login:
+ * toda la app es pública, no hay rutas protegidas ni panel de admin.
  */
 export function SiteNav() {
   const pathname = usePathname();
   const { isDark, toggle } = useTheme();
-
-  if (pathname.startsWith("/admin")) return null;
 
   return (
     <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur transition-colors duration-200 dark:border-slate-800 dark:bg-slate-950/90">
@@ -51,12 +49,6 @@ export function SiteNav() {
         </nav>
 
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-          <Link
-            href="/login"
-            className="hidden text-sm font-medium text-blue-600 hover:underline dark:text-blue-400 sm:inline"
-          >
-            Iniciar sesión
-          </Link>
           <ThemeToggle isDark={isDark} onToggle={toggle} />
         </div>
       </div>

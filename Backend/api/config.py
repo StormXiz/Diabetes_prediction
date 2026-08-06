@@ -15,15 +15,6 @@ load_dotenv()  # no-op en producción si no hay .env; en local carga Backend/.en
 BASE_DIR = Path(__file__).resolve().parent
 MODELS_DIR = BASE_DIR / "models"
 
-# --- Supabase ---
-SUPABASE_URL = os.getenv("SUPABASE_URL", "https://swgqlrbztvqikkyitqtx.supabase.co")
-SUPABASE_ANON_KEY = os.getenv("SUPABASE_ANON_KEY", "")
-# Secreto compartido para verificar JWT localmente (HS256). Se obtiene en
-# Supabase Dashboard -> Settings -> API -> JWT Settings -> "JWT Secret".
-# NUNCA se hardcodea ni se commitea; si no está presente, la API cae a
-# verificación remota contra /auth/v1/user (más lenta, pero sin necesitar el secreto).
-SUPABASE_JWT_SECRET = os.getenv("SUPABASE_JWT_SECRET", "")
-
 # --- CORS ---
 # Dominio(s) del frontend permitido(s), separados por coma. En dev, localhost.
 FRONTEND_ORIGINS = [

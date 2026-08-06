@@ -1,0 +1,31 @@
+{
+  "scale_pos_weight": {
+    "f1_mean": 0.47685347626365593,
+    "f1_std": 0.002225206313248836,
+    "pr_auc_mean": 0.44984464719442563,
+    "pr_auc_std": 0.0036681623183051526,
+    "precision_mean": 0.34882472647811047,
+    "recall_mean": 0.7533802892582744,
+    "roc_auc_mean": 0.804144332206268
+  },
+  "class_weight (sample_weight balanced)": {
+    "f1_mean": 0.4765805070703729,
+    "f1_std": 0.0021054785028916533,
+    "pr_auc_mean": 0.45073253026395943,
+    "pr_auc_std": 0.00472478542576847,
+    "precision_mean": 0.3483786212858096,
+    "recall_mean": 0.7540995843490854,
+    "roc_auc_mean": 0.8045147372163208
+  },
+  "SMOTE (solo en fold de train)": {
+    "f1_mean": 0.31805275209487444,
+    "f1_std": 0.007294410855693523,
+    "pr_auc_mean": 0.45235840253012094,
+    "pr_auc_std": 0.004677171672962321,
+    "precision_mean": 0.5603134200779873,
+    "recall_mean": 0.22205849917566223,
+    "roc_auc_mean": 0.8061569385976979
+  },
+  "natural_imbalance_ratio_neg_pos": 4.784162830840046,
+  "winner_by_f1": "scale_pos_weight"
+}

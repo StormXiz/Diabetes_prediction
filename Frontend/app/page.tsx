@@ -6,7 +6,6 @@ import { ForestCanvasLoader } from "@/components/three/ForestCanvasLoader";
 import { CountUp } from "@/components/CountUp";
 import { FeatureImportanceChart } from "@/components/charts/FeatureImportanceChart";
 import { DiabetesTypeChart } from "@/components/charts/DiabetesTypeChart";
-import { RiskTeaser } from "@/components/RiskTeaser";
 
 const HERO_STATS = [
   { value: 537, suffix: "M+", label: "Personas con diabetes en el mundo" },
@@ -95,21 +94,6 @@ export default function Home() {
             <circle cx="10" cy="9" r="2.5" fill="currentColor" />
           </svg>
         </div>
-      </section>
-
-      {/* 1.5 SIMULADOR INTERACTIVO */}
-      <section className="mx-auto max-w-2xl px-6 pb-24">
-        <Reveal className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-widest text-blue-600 dark:text-blue-400">
-            Pruébalo tú mismo
-          </p>
-          <h2 className="mt-2 text-2xl font-bold text-slate-900 dark:text-slate-50 sm:text-3xl">
-            Mueve las variables y mira cómo cambia el riesgo
-          </h2>
-        </Reveal>
-        <Reveal delay={0.1} className="mt-8">
-          <RiskTeaser />
-        </Reveal>
       </section>
 
       {/* 2. QUÉ ES LA DIABETES */}

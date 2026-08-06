@@ -1,0 +1,40 @@
+{
+  "search_seconds": 101.19965982437134,
+  "n_iter": 80,
+  "n_splits": 5,
+  "scoring_refit": "f1",
+  "best_params": {
+    "colsample_bytree": 0.5887197718898614,
+    "gamma": 3.753073758204292,
+    "learning_rate": 0.1555223258052747,
+    "max_depth": 3,
+    "min_child_weight": 3,
+    "n_estimators": 185,
+    "reg_alpha": 0.030766092622690297,
+    "reg_lambda": 1.2754159474033702,
+    "scale_pos_weight": 2.8744194713915983,
+    "subsample": 0.9653786628017824
+  },
+  "cv_scores_at_best_params": {
+    "f1": {
+      "mean": 0.49228906978355447,
+      "std": 0.0033209510931503164
+    },
+    "average_precision": {
+      "mean": 0.4593538479321618,
+      "std": 0.004531213543719653
+    },
+    "roc_auc": {
+      "mean": 0.8088555100027124,
+      "std": 0.0027724680226051393
+    },
+    "precision": {
+      "mean": 0.41217129560668875,
+      "std": 0.002558139227426533
+    },
+    "recall": {
+      "mean": 0.6110833131104332,
+      "std": 0.005475758393726479
+    }
+  }
+}

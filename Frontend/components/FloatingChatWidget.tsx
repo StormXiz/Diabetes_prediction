@@ -1,17 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { createClient } from "@/lib/supabase/client";
 import { GuideChatbot } from "@/components/GuideChatbot";
 import { riskToLevel } from "@/lib/data/diet_guidance";
+import { readLastPredictionResult } from "@/lib/predictionResult";
+import { readLocalProfile, saveLocalRestrictions } from "@/lib/localProfile";
 import type { ChatContext } from "@/lib/chatbot";
 
 const DEFAULT_CTX: ChatContext = { level: "low", percent: 0, topFactors: [], restrictions: [] };
 
 export function FloatingChatWidget() {
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [ctx, setCtx] = useState<ChatContext>(DEFAULT_CTX);
@@ -19,41 +18,19 @@ export function FloatingChatWidget() {
 
   useEffect(() => {
     if (!open || loaded) return;
-    let cancelled = false;
-    (async () => {
-      const supabase = createClient();
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      if (!user) {
-        if (!cancelled) setLoaded(true);
-        return;
-      }
-      const [{ data: pred }, { data: profile }] = await Promise.all([
-        supabase
-          .from("predictions")
-          .select("risk_score, risk_category, top_factors")
-          .eq("user_id", user.id)
-          .order("created_at", { ascending: false })
-          .limit(1)
-          .maybeSingle(),
-        supabase.from("profiles").select("dietary_restrictions").eq("id", user.id).single(),
-      ]);
-      if (cancelled) return;
-      setCtx({
-        level: pred ? riskToLevel(pred.risk_category) : "low",
-        percent: pred ? Math.round(pred.risk_score * 100) : 0,
-        topFactors: (pred?.top_factors as { feature: string; direction: string }[] | null) ?? [],
-        restrictions: profile?.dietary_restrictions ?? [],
-      });
-      setLoaded(true);
-    })();
-    return () => {
-      cancelled = true;
-    };
+    // Sin login: el contexto sale de lo guardado en ESTE navegador — la
+    // última predicción (sessionStorage) y las restricciones/perfil local
+    // (localStorage) — no hay cuenta de la que leerlos.
+    const pred = readLastPredictionResult();
+    const local = readLocalProfile();
+    setCtx({
+      level: pred ? riskToLevel(pred.risk_category) : "low",
+      percent: pred ? Math.round(pred.risk_score * 100) : 0,
+      topFactors: pred?.top_factors ?? [],
+      restrictions: local?.restrictions ?? [],
+    });
+    setLoaded(true);
   }, [open, loaded]);
-
-  if (pathname.startsWith("/admin")) return null;
 
   return (
     <>
@@ -90,7 +67,10 @@ export function FloatingChatWidget() {
             <GuideChatbot
               compact
               ctx={ctx}
-              onRestrictionsChange={(r) => setCtx((c) => ({ ...c, restrictions: r }))}
+              onRestrictionsChange={(r) => {
+                setCtx((c) => ({ ...c, restrictions: r }));
+                saveLocalRestrictions(r);
+              }}
             />
           </motion.div>
         )}

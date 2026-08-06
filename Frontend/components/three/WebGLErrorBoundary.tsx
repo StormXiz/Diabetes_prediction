@@ -27,6 +27,12 @@ export class WebGLErrorBoundary extends Component<Props, State> {
     return { hasError: true };
   }
 
+  componentDidCatch(error: Error) {
+    // Antes esto se tragaba el error sin dejar rastro — si una escena
+    // 3D se rompe en producción, esto es lo único que lo va a decir.
+    console.error("Escena 3D falló después de montar, mostrando fallback:", error);
+  }
+
   render() {
     if (this.state.hasError) return <SceneFallback />;
     return this.props.children;

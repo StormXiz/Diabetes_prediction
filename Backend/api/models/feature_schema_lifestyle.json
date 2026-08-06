@@ -163,42 +163,103 @@
       "type": "int"
     }
   },
-  "deployed_threshold": 0.34586870670318604,
-  "threshold_f1_optimal": 0.597207248210907,
-  "recall_target": 0.9,
-  "recall_target_reached_on_validation": true,
+  "deployed_threshold": 0.15,
+  "calibration_method": "isotonic",
   "top_factors_global": [
     {
       "feature": "GenHlth",
-      "mean_abs_shap": 0.5283664464950562
+      "mean_abs_shap": 0.506361186504364
     },
     {
       "feature": "BMI",
-      "mean_abs_shap": 0.4015410244464874
+      "mean_abs_shap": 0.3972432017326355
     },
     {
       "feature": "Age",
-      "mean_abs_shap": 0.39723673462867737
+      "mean_abs_shap": 0.39404788613319397
     },
     {
       "feature": "HighBP",
-      "mean_abs_shap": 0.3646557927131653
+      "mean_abs_shap": 0.3620583415031433
     },
     {
       "feature": "HighChol",
-      "mean_abs_shap": 0.29626962542533875
+      "mean_abs_shap": 0.284137487411499
     },
     {
       "feature": "Income",
-      "mean_abs_shap": 0.12540966272354126
+      "mean_abs_shap": 0.10879047960042953
     },
     {
       "feature": "Sex",
-      "mean_abs_shap": 0.11288207024335861
+      "mean_abs_shap": 0.10424918681383133
     },
     {
       "feature": "CholCheck",
-      "mean_abs_shap": 0.07405778765678406
+      "mean_abs_shap": 0.0676957368850708
     }
-  ]
+  ],
+  "reopt_hyperparameters": {
+    "colsample_bytree": 0.5887197718898614,
+    "gamma": 3.753073758204292,
+    "learning_rate": 0.1555223258052747,
+    "max_depth": 3,
+    "min_child_weight": 3,
+    "n_estimators": 185,
+    "reg_alpha": 0.030766092622690297,
+    "reg_lambda": 1.2754159474033702,
+    "scale_pos_weight": 2.8744194713915983,
+    "subsample": 0.9653786628017824
+  },
+  "reopt_test_metrics": {
+    "threshold": 0.15,
+    "confusion_matrix": [
+      [
+        19300,
+        9209
+      ],
+      [
+        1257,
+        4702
+      ]
+    ],
+    "accuracy": 0.6963560403852849,
+    "precision": 0.3380058946157717,
+    "recall": 0.7890585668736365,
+    "specificity": 0.6769791995510189,
+    "f1": 0.4732762959235028,
+    "roc_auc": 0.8119771706212476,
+    "pr_auc": 0.4643739370018516,
+    "brier_score": 0.11483143942184593,
+    "true_positives": 4702,
+    "true_negatives": 19300,
+    "false_positives": 9209,
+    "false_negatives": 1257,
+    "classification_report": "              precision    recall  f1-score   support\n\n   No riesgo       0.94      0.68      0.79     28509\n      Riesgo       0.34      0.79      0.47      5959\n\n    accuracy                           0.70     34468\n   macro avg       0.64      0.73      0.63     34468\nweighted avg       0.83      0.70      0.73     34468\n"
+  },
+  "reopt_stability_cv": {
+    "precision": {
+      "mean": 0.4137412188413546,
+      "std": 0.005115908701697958
+    },
+    "recall": {
+      "mean": 0.6138242722936171,
+      "std": 0.005877474217683321
+    },
+    "f1": {
+      "mean": 0.4942938085243441,
+      "std": 0.005172031879491786
+    },
+    "roc_auc": {
+      "mean": 0.8101530606103801,
+      "std": 0.002715557655248162
+    },
+    "pr_auc": {
+      "mean": 0.4610356466567607,
+      "std": 0.00634092972764688
+    }
+  },
+  "calibrated": true,
+  "min_recall_constraint": 0.8,
+  "threshold_f1_optimal": 0.15
 }

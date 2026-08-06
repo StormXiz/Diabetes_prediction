@@ -8,10 +8,9 @@ Documentación interactiva en /docs (Swagger) una vez levantada.
 """
 from __future__ import annotations
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from auth import AuthenticatedUser, get_current_user
 from config import FRONTEND_ORIGINS
 from schemas import ClinicalInput, LifestyleInput, PredictionOutput
 from services import predict as predict_service
@@ -46,7 +45,7 @@ def health():
 
 
 @app.post("/predict/lifestyle", response_model=PredictionOutput)
-def predict_lifestyle(payload: LifestyleInput, user: AuthenticatedUser = Depends(get_current_user)):
+def predict_lifestyle(payload: LifestyleInput):
     try:
         result = predict_service.predict_lifestyle(payload.model_dump())
     except Exception as exc:  # nunca devolver detalles internos del modelo al cliente
@@ -55,7 +54,7 @@ def predict_lifestyle(payload: LifestyleInput, user: AuthenticatedUser = Depends
 
 
 @app.post("/predict/clinical", response_model=PredictionOutput)
-def predict_clinical(payload: ClinicalInput, user: AuthenticatedUser = Depends(get_current_user)):
+def predict_clinical(payload: ClinicalInput):
     try:
         result = predict_service.predict_clinical(payload.model_dump())
     except Exception as exc:

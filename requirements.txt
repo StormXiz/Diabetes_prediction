@@ -46,13 +46,6 @@ uvicorn[standard]>=0.30
 pydantic>=2.8
 python-dotenv>=1.0
 
-# --- Verificación de JWT de Supabase en la API ---
-pyjwt>=2.9
-python-jose[cryptography]>=3.3
-
-# --- Cliente Supabase (opcional, si la API escribe en Supabase) ---
-supabase>=2.7
-
 # --- Descarga de datasets desde Kaggle (opcional) ---
 kaggle>=1.6
 

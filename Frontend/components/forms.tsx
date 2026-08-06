@@ -39,7 +39,7 @@ export function InfoTooltip({ text }: { text: string }) {
         aria-label="Más información"
         aria-expanded={open}
         onClick={() => setOpen((v) => !v)}
-        className="flex h-4 w-4 items-center justify-center rounded-full bg-slate-200 text-[10px] font-bold text-slate-500 transition-colors hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600"
+        className="relative flex h-4 w-4 cursor-pointer items-center justify-center rounded-full bg-slate-200 text-[10px] font-bold text-slate-500 transition-colors before:absolute before:-inset-3.5 before:content-[''] hover:bg-slate-300 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600"
       >
         i
       </button>
@@ -166,7 +166,7 @@ export function YesNoField({
   onChange: (v: 0 | 1) => void;
 }) {
   return (
-    <div className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 px-3 py-2.5 dark:border-slate-700">
+    <div className="flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-50/70 px-3 py-2.5 dark:border-slate-700 dark:bg-slate-800/40">
       <div>
         <FieldLabel label={label} info={info} />
         {help && <span className="block text-xs text-slate-400 dark:text-slate-500">{help}</span>}
@@ -175,7 +175,7 @@ export function YesNoField({
         <button
           type="button"
           onClick={() => onChange(1)}
-          className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+          className={`min-h-[38px] min-w-[52px] cursor-pointer rounded-full px-3.5 text-xs font-semibold transition-colors ${
             value === 1
               ? "bg-emerald-600 text-white"
               : "bg-slate-100 text-slate-500 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700"
@@ -186,7 +186,7 @@ export function YesNoField({
         <button
           type="button"
           onClick={() => onChange(0)}
-          className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition-colors ${
+          className={`min-h-[38px] min-w-[52px] cursor-pointer rounded-full px-3.5 text-xs font-semibold transition-colors ${
             value === 0
               ? "bg-blue-600 text-white"
               : "bg-slate-100 text-slate-500 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-400 dark:hover:bg-slate-700"
@@ -201,9 +201,30 @@ export function YesNoField({
 
 export function FormSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="space-y-3">
-      <h3 className="text-sm font-semibold uppercase tracking-wide text-slate-400 dark:text-slate-500">{title}</h3>
-      <div className="space-y-3">{children}</div>
+    <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/60 sm:p-6">
+      <h3 className="text-sm font-semibold uppercase tracking-wide text-emerald-700 dark:text-emerald-400">{title}</h3>
+      <div className="mt-4 space-y-4">{children}</div>
+    </div>
+  );
+}
+
+/** Barra de progreso para formularios largos — cuántos campos ya están llenos. */
+export function FormProgress({ done, total }: { done: number; total: number }) {
+  const pct = total === 0 ? 100 : Math.round((done / total) * 100);
+  return (
+    <div className="sticky top-14 z-10 -mx-6 border-b border-slate-200 bg-white/95 px-6 py-3 backdrop-blur transition-colors duration-200 dark:border-slate-800 dark:bg-slate-950/95 sm:top-16">
+      <div className="flex items-center justify-between text-xs font-medium text-slate-500 dark:text-slate-400">
+        <span>Progreso del formulario</span>
+        <span>
+          {done}/{total} campos
+        </span>
+      </div>
+      <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
+        <div
+          className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-blue-500 transition-[width] duration-300 ease-out"
+          style={{ width: `${pct}%` }}
+        />
+      </div>
     </div>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { FoodIcon } from "@/components/FoodIcon";
+import { displayFoodName } from "@/lib/foodDisplay";
 import type { WeekPlan } from "@/lib/dietEngine";
 
 export function WeekPlanView({ plan }: { plan: WeekPlan }) {
@@ -45,7 +46,7 @@ export function WeekPlanView({ plan }: { plan: WeekPlan }) {
                 <div key={i} className="flex items-center gap-3 rounded-xl bg-slate-50 px-3 py-2 dark:bg-slate-900/60">
                   <FoodIcon name={it.food.nombre} tone="good" />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-medium text-slate-800 dark:text-slate-100">{it.food.nombre}</p>
+                    <p className="truncate text-sm font-medium text-slate-800 dark:text-slate-100">{displayFoodName(it.food.nombre)}</p>
                     <p className="text-xs text-slate-400 dark:text-slate-500">
                       {it.grams} g · {it.kcal} kcal
                       {it.substitutedFrom && (

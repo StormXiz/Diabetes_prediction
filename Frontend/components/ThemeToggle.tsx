@@ -12,7 +12,7 @@ export function ThemeToggle({
       type="button"
       onClick={onToggle}
       aria-label={isDark ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
-      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition-transform duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105 active:scale-95 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
+      className="flex h-9 w-9 shrink-0 cursor-pointer items-center justify-center rounded-full border border-slate-200 bg-white text-slate-600 shadow-sm transition-transform duration-150 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105 active:scale-95 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200"
     >
       {isDark ? (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none">

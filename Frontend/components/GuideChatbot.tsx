@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { FoodIcon } from "@/components/FoodIcon";
 import { greeting, suggestionsFor, answer, type ChatMsg, type ChatContext } from "@/lib/chatbot";
+import { displayFoodName } from "@/lib/foodDisplay";
+import { loadStoredChat, saveStoredChat } from "@/lib/chatMemory";
 import type { FoodItem } from "@/lib/data/curatedFoods";
 
 async function askAI(
@@ -44,13 +46,31 @@ export function GuideChatbot({
   const scrollRef = useRef<HTMLDivElement>(null);
   const suggestions = suggestionsFor(ctx);
 
+  // Depende SOLO de level/percent (el perfil de riesgo), nunca del objeto
+  // `ctx` completo: cuando el chat actualiza `restrictions` a mitad de
+  // conversación (function calling), el padre reconstruye `ctx` con una
+  // referencia nueva — si este efecto dependiera de `ctx` entero, cada
+  // respuesta del bot borraba todo el historial y lo dejaba solo con el
+  // saludo otra vez ("el chat se reinicia" al escribir algo).
+  //
+  // Memoria por persona (localStorage, sin cuentas): si ya hay una
+  // conversación guardada para este MISMO nivel/porcentaje de riesgo, se
+  // restaura tal cual — el usuario retoma donde dejó. Si el riesgo cambió
+  // (nueva predicción), se arranca un saludo fresco porque ya es otra
+  // conversación.
   useEffect(() => {
-    setMsgs([greeting(ctx)]);
-  }, [ctx]);
+    const stored = loadStoredChat(ctx.level, ctx.percent);
+    setMsgs(stored ?? [greeting(ctx)]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ctx.level, ctx.percent]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [msgs, typing]);
+
+  useEffect(() => {
+    if (msgs.length > 0) saveStoredChat(ctx.level, ctx.percent, msgs);
+  }, [ctx.level, ctx.percent, msgs]);
 
   function push(msg: ChatMsg) {
     setMsgs((m) => [...m, msg]);
@@ -104,18 +124,23 @@ export function GuideChatbot({
       </div>
 
       <div className="border-t border-slate-200 px-4 py-3 dark:border-slate-800">
-        <div className="mb-3 flex flex-wrap gap-2">
-          {suggestions.map((s) => (
-            <button
-              key={s.intent}
-              onClick={() => handleSuggestion(s.label)}
-              disabled={typing}
-              className="cursor-pointer rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 transition-colors duration-200 hover:bg-emerald-100 disabled:opacity-50 dark:border-emerald-900/50 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-900/40"
-            >
-              {s.label}
-            </button>
-          ))}
-        </div>
+        {/* Solo antes del primer mensaje del usuario — msgs.length===1 es
+            solo el saludo inicial. Una vez que escribe algo, estas sugerencias
+            ya no aplican y solo estorban. */}
+        {msgs.length <= 1 && (
+          <div className="mb-3 flex flex-wrap gap-2">
+            {suggestions.map((s) => (
+              <button
+                key={s.intent}
+                onClick={() => handleSuggestion(s.label)}
+                disabled={typing}
+                className="cursor-pointer rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-medium text-emerald-700 transition-colors duration-200 hover:bg-emerald-100 disabled:cursor-not-allowed disabled:opacity-50 dark:border-emerald-900/50 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-900/40"
+              >
+                {s.label}
+              </button>
+            ))}
+          </div>
+        )}
         <div className="flex items-center gap-2">
           <input
             value={input}
@@ -128,7 +153,7 @@ export function GuideChatbot({
             onClick={handleSend}
             disabled={typing}
             aria-label="Enviar"
-            className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-gradient-to-r from-emerald-600 to-blue-600 text-white transition-transform duration-200 hover:scale-105 active:scale-95 disabled:opacity-50"
+            className="flex h-10 w-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-gradient-to-r from-emerald-600 to-blue-600 text-white transition-transform duration-200 hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="m22 2-7 20-4-9-9-4Z" />
@@ -170,7 +195,7 @@ function FoodChip({ food }: { food: FoodItem }) {
     <div className="flex items-center gap-3 rounded-xl bg-white/80 px-3 py-2 dark:bg-slate-900/70">
       <FoodIcon name={food.nombre} tone={food.avoid ? "bad" : "good"} />
       <div className="min-w-0 flex-1">
-        <p className="truncate text-xs font-semibold text-slate-800 dark:text-slate-100">{food.nombre}</p>
+        <p className="truncate text-xs font-semibold text-slate-800 dark:text-slate-100">{displayFoodName(food.nombre)}</p>
         <p className="text-[11px] text-slate-500 dark:text-slate-400">
           {food.kcal ?? "—"} kcal · {food.fibra ?? 0} g fibra · {food.prot ?? 0} g prot
         </p>

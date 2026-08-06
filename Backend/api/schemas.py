@@ -54,8 +54,13 @@ class TopFactor(BaseModel):
 
 class PredictionOutput(BaseModel):
     module: Literal["lifestyle", "clinical"]
-    risk_score: float = Field(..., ge=0, le=1, description="Probabilidad estimada (0-1)")
+    risk_score: float = Field(..., ge=0, le=1, description="Probabilidad calibrada de riesgo (0-1)")
     risk_category: Literal["low", "moderate", "high"]
+    threshold_used: float = Field(
+        ..., ge=0, le=1,
+        description="Umbral de decisión usado para asignar risk_category, elegido en el set de "
+                     "validación (nunca en test) maximizando F1 con una restricción de recall >= 80%.",
+    )
     top_factors: list[TopFactor]
     disclaimer: str = (
         "Esta es una estimación orientativa generada por un modelo de Machine Learning, "

@@ -5,11 +5,13 @@ import { Reveal } from "@/components/Reveal";
 import { FoodIcon } from "@/components/FoodIcon";
 import { DIET_PLANS, type RiskLevel } from "@/lib/data/diet_guidance";
 import { CURATED_FOODS, type FoodItem } from "@/lib/data/curatedFoods";
+import { allTemplateItems } from "@/lib/data/mealTemplates";
+import { displayFoodName } from "@/lib/foodDisplay";
 
-const LEVEL_TABS: { level: RiskLevel; label: string; ring: string; text: string }[] = [
-  { level: "low", label: "Riesgo bajo", ring: "ring-emerald-500", text: "text-emerald-600 dark:text-emerald-400" },
-  { level: "moderate", label: "Riesgo intermedio", ring: "ring-amber-500", text: "text-amber-600 dark:text-amber-400" },
-  { level: "high", label: "Riesgo alto", ring: "ring-red-500", text: "text-red-600 dark:text-red-400" },
+const LEVEL_TABS: { level: RiskLevel; label: string; dot: string }[] = [
+  { level: "low", label: "Riesgo bajo", dot: "bg-emerald-500" },
+  { level: "moderate", label: "Riesgo intermedio", dot: "bg-amber-500" },
+  { level: "high", label: "Riesgo alto", dot: "bg-red-500" },
 ];
 
 export function NutritionExplorer({ initialLevel = "moderate" }: { initialLevel?: RiskLevel }) {
@@ -17,31 +19,39 @@ export function NutritionExplorer({ initialLevel = "moderate" }: { initialLevel?
   const plan = DIET_PLANS[level];
 
   const { recommended, limit } = useMemo(() => {
-    const focus = new Set(plan.focusCategories);
-    const rec = CURATED_FOODS.filter((f) => !f.avoid && focus.has(f.categoria))
+    // Comida real de los platos del motor de dietas (mealTemplates.ts) — no
+    // el pool de CURATED_FOODS ordenado por fibra, que mezclaba ingredientes
+    // crudos (ej. "lenteja cruda", "salvado de trigo crudo") con comida real.
+    const realFoods = allTemplateItems(level);
+    const rec: FoodItem[] = realFoods
+      .map((i) => ({
+        nombre: i.nombre, categoria: i.categoria, kcal: i.kcal100, prot: i.prot100,
+        carb: i.carb100, grasa: i.grasa100, fibra: i.fibra100, sodio: null, potasio: null, gsat: null, avoid: false,
+      }))
       .sort((a, b) => (b.fibra ?? 0) - (a.fibra ?? 0))
       .slice(0, 6);
     const lim = CURATED_FOODS.filter((f) => f.avoid)
       .sort((a, b) => (b.kcal ?? 0) - (a.kcal ?? 0))
       .slice(0, 4);
     return { recommended: rec, limit: lim };
-  }, [plan]);
+  }, [level]);
 
   return (
     <div>
-      <div className="flex flex-wrap justify-center gap-2">
+      <div className="flex flex-wrap justify-center gap-2 rounded-2xl border border-slate-200 bg-slate-50 p-1.5 dark:border-slate-800 dark:bg-slate-900/60 sm:inline-flex">
         {LEVEL_TABS.map((t) => {
           const active = t.level === level;
           return (
             <button
               key={t.level}
               onClick={() => setLevel(t.level)}
-              className={`cursor-pointer rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
+              className={`flex cursor-pointer items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition-all duration-200 ${
                 active
-                  ? `bg-white text-slate-900 shadow-md ring-2 ${t.ring} dark:bg-slate-800 dark:text-white`
-                  : "bg-slate-100 text-slate-500 hover:bg-slate-200 dark:bg-slate-900 dark:text-slate-400 dark:hover:bg-slate-800"
+                  ? "bg-white text-slate-900 shadow-sm dark:bg-slate-800 dark:text-white"
+                  : "text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-slate-100"
               }`}
             >
+              <span className={`h-2 w-2 rounded-full ${t.dot}`} />
               {t.label}
             </button>
           );
@@ -86,7 +96,7 @@ export function NutritionExplorer({ initialLevel = "moderate" }: { initialLevel?
       <div className="mt-10">
         <h3 className="text-lg font-bold text-slate-900 dark:text-slate-50">Alimentos recomendados</h3>
         <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-          De la Tabla de Composición de Alimentos de Ecuador (2021). Valores por 100 g.
+          De la Tabla de Composición de Alimentos de Ecuador (2021), tal como aparecen en tu plan semanal.
         </p>
         <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {recommended.map((f, i) => (
@@ -174,7 +184,7 @@ function FoodCard({ food }: { food: FoodItem }) {
           <FoodIcon name={food.nombre} tone={food.avoid ? "bad" : "good"} />
         </div>
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-semibold leading-snug text-slate-900 dark:text-slate-100">{food.nombre}</p>
+          <p className="text-sm font-semibold leading-snug text-slate-900 dark:text-slate-100">{displayFoodName(food.nombre)}</p>
           <p className="mt-0.5 text-xs text-slate-400 dark:text-slate-500">{food.categoria}</p>
         </div>
       </div>
