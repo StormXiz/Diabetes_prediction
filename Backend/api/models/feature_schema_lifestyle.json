@@ -163,40 +163,48 @@
       "type": "int"
     }
   },
-  "deployed_threshold": 0.15,
+  "deployed_threshold": 0.22,
   "calibration_method": "isotonic",
   "top_factors_global": [
     {
       "feature": "GenHlth",
-      "mean_abs_shap": 0.506361186504364
+      "mean_abs_shap": 0.44502851366996765
     },
     {
-      "feature": "BMI",
-      "mean_abs_shap": 0.3972432017326355
+      "feature": "risk_factor_count",
+      "mean_abs_shap": 0.29149574041366577
+    },
+    {
+      "feature": "age_x_bmi",
+      "mean_abs_shap": 0.22542940080165863
+    },
+    {
+      "feature": "metabolic_burden",
+      "mean_abs_shap": 0.2042173445224762
     },
     {
       "feature": "Age",
-      "mean_abs_shap": 0.39404788613319397
+      "mean_abs_shap": 0.1732613891363144
     },
     {
       "feature": "HighBP",
-      "mean_abs_shap": 0.3620583415031433
+      "mean_abs_shap": 0.13543899357318878
     },
     {
-      "feature": "HighChol",
-      "mean_abs_shap": 0.284137487411499
-    },
-    {
-      "feature": "Income",
-      "mean_abs_shap": 0.10879047960042953
+      "feature": "BMI",
+      "mean_abs_shap": 0.13021692633628845
     },
     {
       "feature": "Sex",
-      "mean_abs_shap": 0.10424918681383133
+      "mean_abs_shap": 0.1053103506565094
     },
     {
-      "feature": "CholCheck",
-      "mean_abs_shap": 0.0676957368850708
+      "feature": "HighChol",
+      "mean_abs_shap": 0.09011586755514145
+    },
+    {
+      "feature": "Smoker",
+      "mean_abs_shap": 0.07449863106012344
     }
   ],
   "reopt_hyperparameters": {
@@ -261,5 +269,68 @@
   },
   "calibrated": true,
   "min_recall_constraint": 0.8,
-  "threshold_f1_optimal": 0.15
+  "threshold_f1_optimal": 0.22,
+  "threshold_selection_rule": "M\u00e1ximo F1 en validaci\u00f3n; empate resuelto por mayor recall (meseta 0.22-0.30). Nunca se us\u00f3 el set de test para elegirlo.",
+  "model_version": "v2_feature_engineering",
+  "feature_order_encoded": [
+    "BMI",
+    "MentHlth",
+    "PhysHlth",
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "Smoker",
+    "Stroke",
+    "HeartDiseaseorAttack",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "DiffWalk",
+    "Sex",
+    "GenHlth",
+    "Age",
+    "Education",
+    "Income",
+    "BMI_cat",
+    "obese",
+    "metabolic_burden",
+    "cardio_history",
+    "healthy_habits",
+    "poor_health_days",
+    "functional_limitation",
+    "ses_index",
+    "healthcare_access",
+    "age_x_bmi",
+    "genhlth_x_diffwalk",
+    "risk_factor_count"
+  ],
+  "v2_test_metrics": {
+    "threshold": 0.22,
+    "confusion_matrix": [
+      [
+        22703,
+        5806
+      ],
+      [
+        2072,
+        3887
+      ]
+    ],
+    "accuracy": 0.7714401763954972,
+    "precision": 0.40101103889404727,
+    "recall": 0.6522906527940929,
+    "specificity": 0.7963450138552738,
+    "f1": 0.49667774086378735,
+    "roc_auc": 0.813242393179189,
+    "pr_auc": 0.4662270595137558,
+    "brier_score": 0.11461853830304479,
+    "true_positives": 3887,
+    "true_negatives": 22703,
+    "false_positives": 5806,
+    "false_negatives": 2072,
+    "classification_report": "              precision    recall  f1-score   support\n\n   No riesgo       0.92      0.80      0.85     28509\n      Riesgo       0.40      0.65      0.50      5959\n\n    accuracy                           0.77     34468\n   macro avg       0.66      0.72      0.67     34468\nweighted avg       0.83      0.77      0.79     34468\n"
+  }
 }

@@ -33,6 +33,14 @@ const FEATURE_ES: Record<string, string> = {
   PhysActivity: "Actividad física", Fruits: "Consumo de fruta", Veggies: "Consumo de vegetales",
   HvyAlcoholConsump: "Consumo alto de alcohol", AnyHealthcare: "Cobertura de salud",
   NoDocbcCost: "No fue al médico por costo", DiffWalk: "Dificultad para caminar",
+  // Variables derivadas del modelo v2 (ver ml/src/features_lifestyle.py)
+  BMI_cat: "Categoría de IMC", obese: "Obesidad",
+  metabolic_burden: "Carga metabólica", cardio_history: "Antecedentes cardiovasculares",
+  healthy_habits: "Balance de hábitos saludables", poor_health_days: "Días de mala salud al mes",
+  functional_limitation: "Limitación funcional", ses_index: "Nivel socioeconómico",
+  healthcare_access: "Acceso a atención médica", age_x_bmi: "Edad combinada con IMC",
+  genhlth_x_diffwalk: "Salud general con dificultad para caminar",
+  risk_factor_count: "Factores de riesgo acumulados",
 };
 
 function humanizeFeature(name: string): string {

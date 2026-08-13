@@ -1,0 +1,100 @@
+{
+  "dataset": "lifestyle",
+  "final_model": "xgboost_v2_feature_engineering_calibrated",
+  "deployed_threshold": 0.22,
+  "threshold_selection_rule": "M\u00e1ximo F1 en validaci\u00f3n; empate resuelto por mayor recall (meseta 0.22-0.30). Nunca se us\u00f3 el set de test para elegirlo.",
+  "test_metrics_DEPLOYED": {
+    "threshold": 0.22,
+    "confusion_matrix": [
+      [
+        22703,
+        5806
+      ],
+      [
+        2072,
+        3887
+      ]
+    ],
+    "accuracy": 0.7714401763954972,
+    "precision": 0.40101103889404727,
+    "recall": 0.6522906527940929,
+    "specificity": 0.7963450138552738,
+    "f1": 0.49667774086378735,
+    "roc_auc": 0.813242393179189,
+    "pr_auc": 0.4662270595137558,
+    "brier_score": 0.11461853830304479,
+    "true_positives": 3887,
+    "true_negatives": 22703,
+    "false_positives": 5806,
+    "false_negatives": 2072,
+    "classification_report": "              precision    recall  f1-score   support\n\n   No riesgo       0.92      0.80      0.85     28509\n      Riesgo       0.40      0.65      0.50      5959\n\n    accuracy                           0.77     34468\n   macro avg       0.66      0.72      0.67     34468\nweighted avg       0.83      0.77      0.79     34468\n"
+  },
+  "top_factors_global": [
+    {
+      "feature": "GenHlth",
+      "mean_abs_shap": 0.44502851366996765
+    },
+    {
+      "feature": "risk_factor_count",
+      "mean_abs_shap": 0.29149574041366577
+    },
+    {
+      "feature": "age_x_bmi",
+      "mean_abs_shap": 0.22542940080165863
+    },
+    {
+      "feature": "metabolic_burden",
+      "mean_abs_shap": 0.2042173445224762
+    },
+    {
+      "feature": "Age",
+      "mean_abs_shap": 0.1732613891363144
+    },
+    {
+      "feature": "HighBP",
+      "mean_abs_shap": 0.13543899357318878
+    },
+    {
+      "feature": "BMI",
+      "mean_abs_shap": 0.13021692633628845
+    },
+    {
+      "feature": "Sex",
+      "mean_abs_shap": 0.1053103506565094
+    },
+    {
+      "feature": "HighChol",
+      "mean_abs_shap": 0.09011586755514145
+    },
+    {
+      "feature": "Smoker",
+      "mean_abs_shap": 0.07449863106012344
+    }
+  ],
+  "previous_deployment_for_reference": {
+    "threshold": 0.15,
+    "confusion_matrix": [
+      [
+        19300,
+        9209
+      ],
+      [
+        1257,
+        4702
+      ]
+    ],
+    "accuracy": 0.6963560403852849,
+    "precision": 0.3380058946157717,
+    "recall": 0.7890585668736365,
+    "specificity": 0.6769791995510189,
+    "f1": 0.4732762959235028,
+    "roc_auc": 0.8119771706212476,
+    "pr_auc": 0.4643739370018516,
+    "brier_score": 0.11483143942184593,
+    "true_positives": 4702,
+    "true_negatives": 19300,
+    "false_positives": 9209,
+    "false_negatives": 1257,
+    "classification_report": "              precision    recall  f1-score   support\n\n   No riesgo       0.94      0.68      0.79     28509\n      Riesgo       0.34      0.79      0.47      5959\n\n    accuracy                           0.70     34468\n   macro avg       0.64      0.73      0.63     34468\nweighted avg       0.83      0.70      0.73     34468\n"
+  }
+}

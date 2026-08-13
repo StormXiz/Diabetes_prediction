@@ -77,6 +77,19 @@ const FEATURE_ES: Record<string, string> = {
   AnyHealthcare: "tu cobertura de salud",
   NoDocbcCost: "no ir al médico por el costo",
   DiffWalk: "tu dificultad para caminar",
+  // Variables derivadas del modelo v2 (ver ml/src/features_lifestyle.py)
+  BMI_cat: "tu categoría de IMC",
+  obese: "tu nivel de obesidad",
+  metabolic_burden: "tu carga metabólica (presión, colesterol y peso juntos)",
+  cardio_history: "tus antecedentes cardiovasculares",
+  healthy_habits: "el balance de tus hábitos saludables",
+  poor_health_days: "tus días de mala salud al mes",
+  functional_limitation: "tu limitación funcional",
+  ses_index: "tu nivel socioeconómico",
+  healthcare_access: "tu acceso a atención médica",
+  age_x_bmi: "tu edad combinada con tu IMC",
+  genhlth_x_diffwalk: "tu salud general junto con la dificultad para caminar",
+  risk_factor_count: "la cantidad de factores de riesgo que se te acumulan",
 };
 
 // Detecta si el usuario está preguntando por alimentos para adjuntar las

@@ -4,11 +4,14 @@
 // `Backend/api/models/metrics.json` (test_metrics_DEPLOYED). Cambian solo si
 // se reentrena el modelo — ver ml/src/optimize_lifestyle.py para lifestyle.
 //
-// lifestyle se re-optimizó (RandomizedSearchCV + calibración isotonic +
-// umbral elegido en validación con restricción recall>=80%) para subir
-// precisión/F1 sin soltar el recall por debajo de ~80%: antes
-// precision=28.9%/recall=89.0%/f1=43.6%, ahora precision=33.8%/recall=78.9%/
-// f1=47.3% — ver ml/reports/metrics/lifestyle_reopt_06_final_test_comparison.json.
+// lifestyle va por su segunda re-optimización (v2): ingeniería de 12 features
+// derivadas de dominio dentro del preprocesador, búsqueda de 200 iteraciones
+// optimizando PR-AUC, calibración isotonic, y umbral elegido en validación por
+// F1 máximo (empate resuelto por mayor recall). Evolución en test:
+//   original  -> P=28.9% R=89.0% F1=43.6% acc=60.2%
+//   v1        -> P=33.8% R=78.9% F1=47.3% acc=69.6%
+//   v2 (hoy)  -> P=40.1% R=65.2% F1=49.7% acc=77.1%
+// Ver ml/reports/metrics/lifestyle_v2_results.json.
 export type ModuleMetrics = {
   accuracy: number;
   precision: number;
@@ -19,11 +22,11 @@ export type ModuleMetrics = {
 
 export const MODEL_METRICS: Record<"lifestyle" | "clinical", ModuleMetrics> = {
   lifestyle: {
-    accuracy: 0.6960,
-    precision: 0.3380,
-    recall: 0.7891,
-    f1: 0.4733,
-    rocAuc: 0.8120,
+    accuracy: 0.7714,
+    precision: 0.4010,
+    recall: 0.6523,
+    f1: 0.4967,
+    rocAuc: 0.8132,
   },
   clinical: {
     accuracy: 0.913,
@@ -48,7 +51,7 @@ export const MODEL_METRICS_LABELS: { key: keyof ModuleMetrics; label: string; he
   {
     key: "recall",
     label: "Sensibilidad (Recall)",
-    help: "De todos los casos reales de riesgo en el set de prueba, qué % detectó el modelo. El umbral de decisión se eligió para mantenerlo en ~80% o más — es peor no detectar un riesgo real que dar una alerta de más — sin sacrificar la precisión más de lo necesario.",
+    help: "De todos los casos reales de riesgo en el set de prueba, qué % detectó el modelo. El umbral de decisión se eligió buscando el mejor equilibrio con la precisión: detectar la mayoría de los casos reales sin llenar de falsas alarmas a quien no las necesita.",
   },
   {
     key: "f1",

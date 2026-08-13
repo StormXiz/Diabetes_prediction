@@ -1,0 +1,142 @@
+{
+  "n_iter_search": 200,
+  "search_seconds": 423.5618839263916,
+  "engineered_features": 33,
+  "xgb_best_params": {
+    "colsample_bytree": 0.5222207495657645,
+    "gamma": 0.5469869424371501,
+    "learning_rate": 0.01639852246751894,
+    "max_depth": 5,
+    "min_child_weight": 14,
+    "n_estimators": 761,
+    "reg_alpha": 1.8758020772817994,
+    "reg_lambda": 0.49361959030198654,
+    "scale_pos_weight": 1.7218468272531315,
+    "subsample": 0.516263089745626
+  },
+  "xgb_cv_scores": {
+    "average_precision": {
+      "mean": 0.4610084178614026,
+      "std": 0.00470668160585101
+    },
+    "roc_auc": {
+      "mean": 0.8098346060646913,
+      "std": 0.0029063494298549645
+    },
+    "f1": {
+      "mean": 0.44224076143534485,
+      "std": 0.0036298845743102217
+    },
+    "precision": {
+      "mean": 0.4888902377300418,
+      "std": 0.0027557332152479412
+    },
+    "recall": {
+      "mean": 0.40373263328152004,
+      "std": 0.00464119963965867
+    }
+  },
+  "lgbm_cv_pr_auc": 0.45986453016423195,
+  "ensemble_val_pr_auc": {
+    "xgb": 0.4674873321931733,
+    "lgbm": 0.46702646592777003,
+    "ensemble": 0.4677090072532107
+  },
+  "use_ensemble": false,
+  "brier_val": {
+    "sin_calibrar": 0.12103362825663279,
+    "isotonic": 0.11413104699769785
+  },
+  "threshold_options": {
+    "f1_global": 0.26,
+    "f1_recall80": 0.15,
+    "recall80_max_precision": 0.15
+  },
+  "test_results": {
+    "f1_global": {
+      "threshold": 0.26,
+      "confusion_matrix": [
+        [
+          23818,
+          4691
+        ],
+        [
+          2466,
+          3493
+        ]
+      ],
+      "accuracy": 0.7923581292793316,
+      "precision": 0.42680840664711633,
+      "recall": 0.5861721765396879,
+      "specificity": 0.8354554702023922,
+      "f1": 0.4939546065191261,
+      "roc_auc": 0.813242393179189,
+      "pr_auc": 0.4662270595137558,
+      "brier_score": 0.11461853830304479,
+      "true_positives": 3493,
+      "true_negatives": 23818,
+      "false_positives": 4691,
+      "false_negatives": 2466,
+      "classification_report": "              precision    recall  f1-score   support\n\n   No riesgo       0.91      0.84      0.87     28509\n      Riesgo       0.43      0.59      0.49      5959\n\n    accuracy                           0.79     34468\n   macro avg       0.67      0.71      0.68     34468\nweighted avg       0.82      0.79      0.80     34468\n"
+    },
+    "f1_recall80": {
+      "threshold": 0.15,
+      "confusion_matrix": [
+        [
+          19442,
+          9067
+        ],
+        [
+          1275,
+          4684
+        ]
+      ],
+      "accuracy": 0.6999535801322966,
+      "precision": 0.34062977238019054,
+      "recall": 0.7860379258264809,
+      "specificity": 0.6819600827808762,
+      "f1": 0.47529173008625064,
+      "roc_auc": 0.813242393179189,
+      "pr_auc": 0.4662270595137558,
+      "brier_score": 0.11461853830304479,
+      "true_positives": 4684,
+      "true_negatives": 19442,
+      "false_positives": 9067,
+      "false_negatives": 1275,
+      "classification_report": "              precision    recall  f1-score   support\n\n   No riesgo       0.94      0.68      0.79     28509\n      Riesgo       0.34      0.79      0.48      5959\n\n    accuracy                           0.70     34468\n   macro avg       0.64      0.73      0.63     34468\nweighted avg       0.84      0.70      0.74     34468\n"
+    },
+    "recall80_max_precision": {
+      "threshold": 0.15,
+      "confusion_matrix": [
+        [
+          19442,
+          9067
+        ],
+        [
+          1275,
+          4684
+        ]
+      ],
+      "accuracy": 0.6999535801322966,
+      "precision": 0.34062977238019054,
+      "recall": 0.7860379258264809,
+      "specificity": 0.6819600827808762,
+      "f1": 0.47529173008625064,
+      "roc_auc": 0.813242393179189,
+      "pr_auc": 0.4662270595137558,
+      "brier_score": 0.11461853830304479,
+      "true_positives": 4684,
+      "true_negatives": 19442,
+      "false_positives": 9067,
+      "false_negatives": 1275,
+      "classification_report": "              precision    recall  f1-score   support\n\n   No riesgo       0.94      0.68      0.79     28509\n      Riesgo       0.34      0.79      0.48      5959\n\n    accuracy                           0.70     34468\n   macro avg       0.64      0.73      0.63     34468\nweighted avg       0.84      0.70      0.74     34468\n"
+    }
+  },
+  "probability_spread_test": {
+    "p95_de_positivos": 0.6854838728904724,
+    "mediana_positivos": 0.3377777636051178,
+    "mediana_negativos": 0.08606557548046112,
+    "max_probabilidad": 0.800000011920929,
+    "separacion_medianas": 0.25171220302581787
+  }
+}

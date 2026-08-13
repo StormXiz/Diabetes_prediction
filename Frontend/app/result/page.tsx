@@ -86,7 +86,8 @@ export default function ResultPage() {
         </p>
         <p className="mt-2 text-center text-[11px] text-slate-400 dark:text-slate-500">
           Categoría asignada con un umbral de {Math.round(prediction.threshold_used * 100)}% de
-          probabilidad, elegido para detectar al menos 8 de cada 10 casos reales de riesgo.
+          probabilidad, elegido en datos de validación para equilibrar cuántos casos reales
+          detecta con cuántas falsas alarmas genera.
         </p>
       </div>
 
@@ -180,6 +181,17 @@ function humanizeFeature(name: string): string {
     PhysActivity: "Actividad física", Fruits: "Consumo de fruta", Veggies: "Consumo de vegetales",
     HvyAlcoholConsump: "Consumo alto de alcohol", AnyHealthcare: "Cobertura de salud",
     NoDocbcCost: "No fue al médico por costo", DiffWalk: "Dificultad para caminar",
+    // Variables derivadas que calcula el modelo v2 (ver ml/src/features_lifestyle.py)
+    BMI_cat: "Categoría de IMC", obese: "Obesidad",
+    metabolic_burden: "Carga metabólica (presión + colesterol + obesidad)",
+    cardio_history: "Antecedentes cardiovasculares",
+    healthy_habits: "Balance de hábitos saludables",
+    poor_health_days: "Días de mala salud al mes",
+    functional_limitation: "Limitación funcional",
+    ses_index: "Nivel socioeconómico", healthcare_access: "Acceso a atención médica",
+    age_x_bmi: "Edad combinada con IMC",
+    genhlth_x_diffwalk: "Salud general con dificultad para caminar",
+    risk_factor_count: "Cantidad de factores de riesgo acumulados",
   };
   return map[name] ?? name;
 }
